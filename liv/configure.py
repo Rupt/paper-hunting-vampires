@@ -43,7 +43,7 @@ def main():
     configure(parameters, args.output_dir)
 
 
-def configure(parameters, output_dir):
+def configure(parameters, output_dir, verbose=False):
     """Write an LIV SME model with given parameters to output_dir.
 
     Only supports 0, 0 generation indices.
@@ -69,7 +69,6 @@ def configure(parameters, output_dir):
     check_traceless_hermitian(u)
     check_traceless_hermitian(d)
     axup, axdn, veup, vedn = qud_to_avud(q, u, d)
-    verbose = True
     if verbose:
         print(axup[:, :, 0, 0].real)
         print(axdn[:, :, 0, 0].real)
