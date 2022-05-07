@@ -1,5 +1,17 @@
-# Generate a sample of events from the PV-mSME with lambdaPV set to:
-LAMBDAPV=0.5
+# Generate a sample of events from the PV-mSME with lambdaPV set to
+# the argument:
+# Usage:
+# source example_pv_msme_lhe.sh ${LAMBDAPV}
+# e.g.
+# source example_pv_msme_lhe.sh 0.5
+LAMBDAPV=$1
+
+if [ ! ${LAMBDAPV} ]
+then
+    echo "Usage: source example_pv_msme_lhe.sh \${LAMBDAPV}"
+    return
+fi
+
 
 # Make the PV-mSME coupling matrices.
 sed s/_/${LAMBDAPV}/g liv/parameter/pv_msme_template.json \
