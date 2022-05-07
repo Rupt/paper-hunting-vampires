@@ -99,7 +99,9 @@ def truth_to_images(jets):
 
 
 def dump_truth_images(images, filename):
-    os.makedirs(os.path.dirname(filename), exist_ok=True)
+    dirname = os.path.dirname(filename)
+    if dirname:
+        os.makedirs(dirname, exist_ok=True)
     with h5py.File(filename, "w") as file_:
         dataset = file_.create_dataset("entries", data=images, compression="gzip")
     print("wrote %r" % filename)

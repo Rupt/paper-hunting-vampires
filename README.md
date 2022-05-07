@@ -3,6 +3,16 @@ Supporting material for an upcoming paper.
 
 Use a Linux environment with a recent version of **python 3**.
 
+For compatibility, it may be helpful to start from a clean conda environment:
+```bash
+conda create -n blank python==3.10.4
+```
+then
+```bash
+conda activate blank
+```
+
+
 ## Generate paper plots
 
 These all use data serialized in this git repository.
