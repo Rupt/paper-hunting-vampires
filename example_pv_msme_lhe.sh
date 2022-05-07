@@ -32,7 +32,7 @@ cd liv; \
 python madcontrol.py launch process/pv_msme_${LAMBDAPV/\./p} \
 --name example \
 --seed 1 \
---nevents 20_000 \
+--nevents 10_000 \
 --kwargs '{"ptj": 200, "etaj": 3.2, "ickkw": 0, "xqcut": 0, "ktdurham": 200}' \
 --ncores $((($(nproc --all) + 1) / 2)) \
 )
