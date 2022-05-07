@@ -34,3 +34,6 @@ python gen_data/process_truth_to_images.py \
 
 
 deactivate
+
+echo ls -lh ${LHE_GZ/.lhe.gz/_truth.h5} ${LHE_GZ/.lhe.gz/_truth_cut.h5} ${LHE_GZ/.lhe.gz/_truth_cut_images.h5}
+ls -lh ${LHE_GZ/.lhe.gz/_truth.h5} ${LHE_GZ/.lhe.gz/_truth_cut.h5} ${LHE_GZ/.lhe.gz/_truth_cut_images.h5}
