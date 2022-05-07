@@ -30,7 +30,7 @@ Choosing lambdaPV = 0.5 as an example.
 source example_pv_msme_lhe.sh 0.5
 ```
 
-## Extract truth-jet inputs
+## Extract truth-jet data
 
 ```bash
 source example_truth_jet.sh pv_msme_0p5.lhe.gz
