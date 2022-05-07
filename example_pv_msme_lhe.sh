@@ -13,6 +13,10 @@ then
 fi
 
 
+make env_basic/bin/activate
+source env_basic/bin/activate
+
+
 # Make the PV-mSME coupling matrices.
 sed s/_/${LAMBDAPV}/g liv/parameter/pv_msme_template.json \
 > liv/parameter/pv_msme_${LAMBDAPV/\./p}.json

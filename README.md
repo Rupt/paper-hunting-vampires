@@ -5,7 +5,7 @@ Use a Linux environment with a recent version of **python 3**.
 
 For compatibility, it may be helpful to start from a clean conda environment:
 ```bash
-conda create -n blank python==3.10.4
+conda create -n blank python==3.9.12
 ```
 then
 ```bash
@@ -33,6 +33,5 @@ source example_pv_msme_lhe.sh 0.5
 ## Extract truth-jet inputs
 
 ```bash
-source example_truth_jet.sh 0.5
-
+source example_truth_jet.sh pv_msme_0p5.lhe.gz
 ```
