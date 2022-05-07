@@ -5,8 +5,7 @@ Supporting material for an upcoming paper.
 
 ```bash
 
-source setup_pv_msme.sh
-
+source example_pv_msme_lhe.sh
 
 
 ```
