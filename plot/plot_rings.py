@@ -8,7 +8,6 @@ python plot/plot_rings.py
 """
 import json
 
-import matplotlib
 import numpy
 import plot_lib
 from matplotlib import pyplot
@@ -27,11 +26,11 @@ PROCESS_TO_LABEL = {
 }
 
 PDG_TO_TEX = {
-    1: "\mathrm{d}",
+    1: r"\mathrm{d}",
     -1: r"\bar{\mathrm{d}}",
-    2: "\mathrm{u}",
+    2: r"\mathrm{u}",
     -2: r"\bar{\mathrm{u}}",
-    21: "\mathrm{g}",
+    21: r"\mathrm{g}",
 }
 
 
@@ -183,7 +182,9 @@ def plot_one(axis, tree):
     pring_flip = numpy.array(tree["pring_flip"])
 
     ngrid = tree["ngrid"]
-    assert len(ring) == len(ring_flip) == len(pring) == len(pring_flip) == ngrid
+    assert (
+        len(ring) == len(ring_flip) == len(pring) == len(pring_flip) == ngrid
+    )
 
     thetas = numpy.linspace(0, 2 * numpy.pi, len(ring))
 
@@ -212,7 +213,11 @@ def plot_one(axis, tree):
 
     ring_obj = axis.plot(*xy(ring), color=COLOR_ORIGINAL, lw=lw, alpha=alpha)
     ring_flip_obj = axis.plot(
-        *xy(ring_flip), linestyle="--", color=COLOR_ORIGINAL, lw=lw, alpha=alpha
+        *xy(ring_flip),
+        linestyle="--",
+        color=COLOR_ORIGINAL,
+        lw=lw,
+        alpha=alpha,
     )
 
     axlim = max(max(lims), 1e-300) * 1.05
@@ -265,7 +270,9 @@ def plot_variation(tree, label=""):
     pring_flip = numpy.array(tree["pring_flip"])
 
     ngrid = tree["ngrid"]
-    assert len(ring) == len(ring_flip) == len(pring) == len(pring_flip) == ngrid
+    assert (
+        len(ring) == len(ring_flip) == len(pring) == len(pring_flip) == ngrid
+    )
 
     theta = numpy.linspace(0, 2 * numpy.pi, len(ring))
 
@@ -280,10 +287,14 @@ def plot_variation(tree, label=""):
     alpha = 1.0
 
     axis.plot(theta, py, color=COLOR_PARITY, lw=lw, alpha=alpha)
-    axis.plot(theta, pyflip, linestyle="--", color=COLOR_PARITY, lw=lw, alpha=alpha)
+    axis.plot(
+        theta, pyflip, linestyle="--", color=COLOR_PARITY, lw=lw, alpha=alpha
+    )
 
     axis.plot(theta, y, color=COLOR_ORIGINAL, lw=lw, alpha=alpha)
-    axis.plot(theta, yflip, linestyle="--", color=COLOR_ORIGINAL, lw=lw, alpha=alpha)
+    axis.plot(
+        theta, yflip, linestyle="--", color=COLOR_ORIGINAL, lw=lw, alpha=alpha
+    )
 
     scale = numpy.max(numpy.abs([y, yflip, py, pyflip]))
     axis.set_ylim(1.05 * scale, -1.05 * scale)
@@ -314,6 +325,7 @@ def flavours_str(flavours):
     r += r"$"
     return r
 
+
 # ripped from rings_lib
 def xy_from(theta, radius):
     """Return cartesian versions of polar coordinates."""
@@ -323,7 +335,6 @@ def xy_from(theta, radius):
             numpy.sin(theta) * radius,
         ]
     )
-
 
 
 if __name__ == "__main__":

@@ -7,8 +7,13 @@ from matplotlib import pyplot
 
 PREFIX = "plots"
 
-cmap_purple_orange = lambda x: matplotlib.cm.plasma(x * 0.7)
-cmap_greens = lambda x: matplotlib.cm.viridis(0.4 + x * 0.4)
+
+def cmap_purple_orange(x):
+    return matplotlib.cm.plasma(x * 0.7)
+
+
+def cmap_greens(x):
+    return matplotlib.cm.viridis(0.4 + x * 0.4)
 
 
 def set_default_context():
@@ -214,7 +219,9 @@ def plot_qualities(
         )
         errorbars.append(bar)
 
-    labels = [r"$\textrm{%s}$" % label.replace(" ", "~") for label in label_to_spec]
+    labels = [
+        r"$\textrm{%s}$" % label.replace(" ", "~") for label in label_to_spec
+    ]
     axis.legend(
         errorbars,
         labels,

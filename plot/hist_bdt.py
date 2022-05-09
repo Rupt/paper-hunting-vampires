@@ -44,11 +44,9 @@ import glob
 import json
 import os
 
-import h5py
 import hist
 import jet_bdt_lib
 import jet_lib
-import numpy
 
 from sksym import sksym
 
@@ -63,7 +61,9 @@ def main():
     args = parser.parse_args()
 
     os.makedirs(args.outpath, exist_ok=True)
-    hist_bdt(args.signal, args.modelpath, args.datapath, args.outpath, args.tag)
+    hist_bdt(
+        args.signal, args.modelpath, args.datapath, args.outpath, args.tag
+    )
 
 
 def hist_bdt(signal, modelpath, datapath, outpath, tag, *, verbose=True):
@@ -93,7 +93,9 @@ def hist_bdt(signal, modelpath, datapath, outpath, tag, *, verbose=True):
         for path in inpaths:
             yield jet_lib.load_invariant_momenta(path)
 
-    inpaths = sorted(glob.glob(os.path.join(datapath, signal, "private_test", "*.h5")))
+    inpaths = sorted(
+        glob.glob(os.path.join(datapath, signal, "private_test", "*.h5"))
+    )
 
     results = hist.histogram(func_bins_ranges, gen_arrays(inpaths))
 

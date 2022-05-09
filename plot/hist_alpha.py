@@ -11,14 +11,14 @@ e.g.
 
 
 python plot/hist_alpha.py --tag truth \
-    --inpath /home/tombs/Downloads/truth_ktdurham200_cut/sm_3j_4j/ \
-    --outpath results/hist/liv_0/
+--inpath /home/tombs/Downloads/truth_ktdurham200_cut/sm_3j_4j/ \
+--outpath results/hist/liv_0/
 
 for LAMBDA in p1 p2 p3 p4 p5 p6 p7 p8 p9 1
 do
     python plot/hist_alpha.py --tag truth \
-        --inpath /home/tombs/Downloads/truth_ktdurham200_cut/liv_3j_4j_${LAMBDA}/ \
-        --outpath results/hist/liv_${LAMBDA}/
+    --inpath /home/tombs/Downloads/truth_ktdurham200_cut/liv_3j_4j_${LAMBDA}/ \
+    --outpath results/hist/liv_${LAMBDA}/
 done
 
 
@@ -29,20 +29,18 @@ python plot/hist_alpha.py --tag reco \
 for LAMBDA in p1 p2 p3 p4 p5 p6 p7 p8 p9 1
 do
     python plot/hist_alpha.py --tag reco \
-        --inpath /home/tombs/Downloads/reco_ktdurham200/liv_3j_4j_${LAMBDA}/ \
-        --outpath results/hist/liv_${LAMBDA}/
+    --inpath /home/tombs/Downloads/reco_ktdurham200/liv_3j_4j_${LAMBDA}/ \
+    --outpath results/hist/liv_${LAMBDA}/
 done
 
 """
 import argparse
 import glob
-import gzip
 import json
 import os
 
 import h5py
 import hist
-import joblib
 import numpy
 
 

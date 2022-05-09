@@ -6,10 +6,8 @@ Usage:
 python plot/plot_two_bin_stats.py
 
 """
-import matplotlib
 import numpy
 import plot_lib
-import scipy.special
 from matplotlib import pyplot
 from numpy import float32
 from scipy.special import xlogy
@@ -40,7 +38,8 @@ def plot_twobin():
 
     print(f"{post_fit_yields = }")
     significance_post_fit = sigma(
-        poisson_llr(nminus, post_fit_yields[0]) + poisson_llr(nplus, post_fit_yields[1])
+        poisson_llr(nminus, post_fit_yields[0])
+        + poisson_llr(nplus, post_fit_yields[1])
     )
     print(f"{significance_post_fit = :.1f}")
     print()
@@ -198,15 +197,16 @@ def poisson_interval(n, llr_):
         return (0.0, -float(llr_))
 
     # bisection to float32 precision
-    f = lambda x: poisson_llr(n, x) - llr_
+    def func(x):
+        return poisson_llr(n, x) - llr_
 
     delta = 2 * sigma(llr_) * n
 
-    while f(n + delta) > 0:
+    while func(n + delta) > 0:
         delta *= 2
 
-    hi = bisectf(f, n + delta, n)
-    lo = bisectf(f, 0, n)
+    hi = bisectf(func, n + delta, n)
+    lo = bisectf(func, 0, n)
 
     return lo, hi
 

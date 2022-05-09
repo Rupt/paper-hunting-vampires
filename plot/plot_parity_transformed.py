@@ -10,11 +10,10 @@ python plot/plot_parity_transformed.py
 import json
 
 import hist
-import matplotlib
 import numpy
 import plot_lib
 from matplotlib import pyplot
-from plot_lib import cmap_purple_orange, hist_err, save_fig
+from plot_lib import hist_err, save_fig
 
 
 def main():
@@ -226,7 +225,9 @@ def plot_both(alphaname, netname, *, scale, lumi_ifb, linear=False):
 def load_hists(label, histname):
     nbins = 20
 
-    hist_dict = json.load(open("results/hist/liv_%s/%s.json" % (label, histname)))
+    hist_dict = json.load(
+        open("results/hist/liv_%s/%s.json" % (label, histname))
+    )
     hist_dict = hist.rebin(hist_dict, nbins, hist_dict["range"])
     x, edges = hist.arrays(hist_dict)
 

@@ -1,9 +1,8 @@
 """
 Generate and serialize histograms.
 """
-import itertools
 import json
-from collections.abc import Callable, Sequence
+from collections.abc import Callable
 from numbers import Integral
 
 import numpy
@@ -45,7 +44,9 @@ def histogram(func_bins_ranges, arrays):
 
     return [
         {"bins": bins, "range": range_.tolist(), "hist": func_hist.tolist()}
-        for func_hist, (_, bins, range_) in zip(func_hists, func_bins_ranges_checked)
+        for func_hist, (_, bins, range_) in zip(
+            func_hists, func_bins_ranges_checked
+        )
     ]
 
 
@@ -133,7 +134,9 @@ def histogram2d(func_bins_ranges, arrays):
             "range": range_.tolist(),
             "hist": func_hist.ravel().tolist(),
         }
-        for func_hist, (_, bins, range_) in zip(func_hists, func_bins_ranges_checked)
+        for func_hist, (_, bins, range_) in zip(
+            func_hists, func_bins_ranges_checked
+        )
     ]
 
 
@@ -180,7 +183,11 @@ def rebin2d(hist_dict, bins, range_):
     new_hist = hist[xi:xj, yi:yj].reshape(-1, ybins, yratio).sum(axis=2)
     new_hist = new_hist.reshape(xbins, xratio, ybins).sum(axis=1)
 
-    return {"bins": bins, "range": range_.tolist(), "hist": new_hist.ravel().tolist()}
+    return {
+        "bins": bins,
+        "range": range_.tolist(),
+        "hist": new_hist.ravel().tolist(),
+    }
 
 
 # utility
@@ -217,7 +224,9 @@ def test_histogram():
         numpy.testing.assert_array_equal(item["bins"], bins)
         numpy.testing.assert_array_equal(item["range"], range_)
 
-        hist_parts = (numpy.histogram(func(a), bins, range_)[0] for a in arrays)
+        hist_parts = (
+            numpy.histogram(func(a), bins, range_)[0] for a in arrays
+        )
         hist_check = next(hist_parts)
         for hist_part in hist_parts:
             hist_check += hist_part
@@ -280,7 +289,9 @@ def test_arrays():
     bins = [3, 3]
     range_ = [(0, 3), (1, 4)]
 
-    h2d = histogram2d([(lambda x, y: (x, y), bins, range_)], [(xarray, yarray)])
+    h2d = histogram2d(
+        [(lambda x, y: (x, y), bins, range_)], [(xarray, yarray)]
+    )
     hist_test, xedges_test, yedges_test = arrays2d(h2d[0])
 
     hist_check, xedges_check, yedges_check = numpy.histogram2d(
@@ -310,7 +321,9 @@ def test_rebin():
         hist_dict_rebinned = rebin(hist_dict, bins, range_)
         hist_check = numpy.histogram(array, bins, range_)[0]
 
-        numpy.testing.assert_array_equal(hist_dict_rebinned["hist"], hist_check)
+        numpy.testing.assert_array_equal(
+            hist_dict_rebinned["hist"], hist_check
+        )
         numpy.testing.assert_array_equal(hist_dict_rebinned["bins"], bins)
         numpy.testing.assert_array_equal(hist_dict_rebinned["range"], range_)
 
@@ -322,9 +335,9 @@ def test_rebin2d():
     bins = [4, 4]
     range_ = [(0, 1), (0, 1)]
 
-    hist_dict = histogram2d([(lambda x, y: (x, y), bins, range_)], [(xarray, yarray)])[
-        0
-    ]
+    hist_dict = histogram2d(
+        [(lambda x, y: (x, y), bins, range_)], [(xarray, yarray)]
+    )[0]
 
     rebin_args = [
         ([2, 2], [(0, 1), (0, 1)]),
@@ -340,7 +353,9 @@ def test_rebin2d():
         hist_dict_rebinned = rebin2d(hist_dict, bins, range_)
         hist_check = numpy.histogram2d(xarray, yarray, bins, range_)[0]
 
-        numpy.testing.assert_array_equal(hist_dict_rebinned["hist"], hist_check.ravel())
+        numpy.testing.assert_array_equal(
+            hist_dict_rebinned["hist"], hist_check.ravel()
+        )
         numpy.testing.assert_array_equal(hist_dict_rebinned["bins"], bins)
         numpy.testing.assert_array_equal(hist_dict_rebinned["range"], range_)
 

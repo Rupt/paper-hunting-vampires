@@ -1,56 +1,32 @@
 """
 Dump plots of kinematic distributions shaded by net output.
 
-!!! Requires external data !!!
 
 Usage:
 
-python plot/plot_kinematics ${DATAPATH} %{MODELPATH}
-
-e.g.
-
-python plot/plot_kinematics.py \
-/home/tombs/Downloads/reco_ktdurham200 \
-/home/tombs/Downloads/models/jet_net_reco/
+python plot/plot_kinematics.py
 
 
 """
-import os
-import sys
-
-import jax
-import jet_lib
-import jet_net_lib
+import h5py
 import matplotlib
 import numpy
 import plot_lib
-from jet_net_lib import make_net, parity_flip_jax, prescale, zeta_100_100_d_10
 from matplotlib import pyplot
+from prepare_kinematics import FILENAME
 
 # data
 
 LABELS = ["AX", "AZ", "BX", "BY", "BZ", "CX", "CY", "CZ"]
 label_index = LABELS.index
 
-MODEL = "liv_3j_4j_1"
-
-# core
-
 
 def main():
-    assert (
-        len(sys.argv) == 3
-    ), "Usage: python plot/plot_kinematics ${DATAPATH} ${MODELPATH}"
+    with h5py.File(FILENAME) as file_:
+        data = file_["data"][:]
+        phi = file_["phi"][:]
 
     plot_lib.set_default_context()
-
-    data_path, model_path = sys.argv[1:]
-    data = jet_lib.load_invariant_momenta(
-        os.path.join(data_path, MODEL, "private_test/*.h5"),
-        nmax=1_000_000,
-    )
-
-    phi = evaluate_net(model_path, data)
 
     cmap = make_cmap_2col(
         plot_lib.cmap_purple_orange(0),
@@ -59,25 +35,6 @@ def main():
 
     plot_combo_t("kin_net_1_t.png", data, phi, cmap)
     plot_combo_z("kin_net_1_z.png", data, phi, cmap)
-
-
-def evaluate_net(model_path, data):
-    params, meta = jet_net_lib.fit_load(os.path.join(model_path, MODEL))
-
-    net = make_net(zeta_100_100_d_10)
-
-    pre_loc, pre_scale = meta["prescale"].values()
-    pre_loc = jax.numpy.array(pre_loc, dtype=numpy.float32)
-    pre_scale = jax.numpy.array(pre_scale, dtype=numpy.float32)
-
-    @jax.jit
-    def net_phi(params, x):
-        x = prescale(x, pre_loc, pre_scale)
-        zeta = net.net
-        phi_1 = zeta.apply(params, x) - zeta.apply(params, parity_flip_jax(x))
-        return phi_1.ravel()
-
-    return numpy.array(net_phi(params, data))
 
 
 def plot_combo_t(out_path, data, phi, cmap):
@@ -176,7 +133,12 @@ def plot_combo_t(out_path, data, phi, cmap):
     mappable = matplotlib.cm.ScalarMappable(norm, cmap)
     figure.colorbar(mappable, cax=axis_colorbar)
     axis_colorbar.plot(
-        [0.5, 0.5], [-1, 1], color="k", linewidth=1, linestyle="--", zorder=-0.5
+        [0.5, 0.5],
+        [-1, 1],
+        color="k",
+        linewidth=1,
+        linestyle="--",
+        zorder=-0.5,
     )
     axis_colorbar.set_yticks([-1, 1])
     axis_colorbar.set_ylabel("$f$")
@@ -290,7 +252,12 @@ def plot_combo_z(out_path, data, phi, cmap):
     mappable = matplotlib.cm.ScalarMappable(norm, cmap)
     figure.colorbar(mappable, cax=axis_colorbar)
     axis_colorbar.plot(
-        [0.5, 0.5], [-1, 1], color="k", linewidth=1, linestyle="--", zorder=-0.5
+        [0.5, 0.5],
+        [-1, 1],
+        color="k",
+        linewidth=1,
+        linestyle="--",
+        zorder=-0.5,
     )
     axis_colorbar.set_yticks([-1, 1])
     axis_colorbar.set_ylabel("$f$")

@@ -44,13 +44,10 @@ import glob
 import json
 import os
 
-import h5py
 import hist
-import jax
 import jet_lib
 import jet_net_lib
 import numpy
-from jet_net_lib import make_net, parity_flip_jax, prescale, zeta_100_100_d_10
 
 
 def main():
@@ -63,7 +60,9 @@ def main():
     args = parser.parse_args()
 
     os.makedirs(args.outpath, exist_ok=True)
-    hist_net(args.signal, args.modelpath, args.datapath, args.outpath, args.tag)
+    hist_net(
+        args.signal, args.modelpath, args.datapath, args.outpath, args.tag
+    )
 
 
 def hist_net(signal, modelpath, datapath, outpath, tag, *, verbose=True):
@@ -93,7 +92,9 @@ def hist_net(signal, modelpath, datapath, outpath, tag, *, verbose=True):
         for path in inpaths:
             yield jet_lib.load_invariant_momenta(path)
 
-    inpaths = sorted(glob.glob(os.path.join(datapath, signal, "private_test", "*.h5")))
+    inpaths = sorted(
+        glob.glob(os.path.join(datapath, signal, "private_test", "*.h5"))
+    )
 
     results = hist.histogram(func_bins_ranges, gen_arrays(inpaths))
 

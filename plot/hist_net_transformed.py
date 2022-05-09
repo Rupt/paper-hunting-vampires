@@ -1,5 +1,5 @@
 """
-Dump serialized histograms of the net parity variable for LIV_1 quantile transformed.
+Dump serialized hists of a net parity variable quantile transformed.
 
 Usage:
 
@@ -19,14 +19,11 @@ import gzip
 import json
 import os
 
-import h5py
 import hist
-import jax
 import jet_lib
 import jet_net_lib
 import joblib
 import numpy
-from jet_net_lib import make_net, parity_flip_jax, prescale, zeta_100_100_d_10
 
 
 def main():
@@ -44,7 +41,9 @@ def main():
     )
 
 
-def hist_net_transformed(signal, modelpath, datapath, outpath, tag, *, verbose=True):
+def hist_net_transformed(
+    signal, modelpath, datapath, outpath, tag, *, verbose=True
+):
 
     unit_range = (-1, 1)
     unit_bins = 2000
@@ -75,7 +74,9 @@ def hist_net_transformed(signal, modelpath, datapath, outpath, tag, *, verbose=T
         for i in range(0, len(momenta), step):
             yield momenta[i : i + step]
 
-    inpaths = sorted(glob.glob(os.path.join(datapath, signal, "private_test", "*.h5")))
+    inpaths = sorted(
+        glob.glob(os.path.join(datapath, signal, "private_test", "*.h5"))
+    )
 
     results = hist.histogram(func_bins_ranges, gen_arrays(inpaths))
 
