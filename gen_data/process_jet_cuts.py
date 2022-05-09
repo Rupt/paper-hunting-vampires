@@ -34,10 +34,8 @@ done
 
 """
 import argparse
-import gzip
 
 import h5lib
-import lhe
 import numpy
 
 

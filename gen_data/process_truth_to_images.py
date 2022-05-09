@@ -6,12 +6,12 @@ Usage:
 e.g.
 
 python gen_data/process_truth_to_images.py \
-    --infile /home/tombs/Downloads/truth_ktdurham200/liv_3j_4j_1/train/liv_3j_4j_1_8_truth.h5 \
-    --outfile /home/tombs/Downloads/truth_ktdurham200_images/liv_3j_4j_1/train/liv_3j_4j_1_8_truth_images.h5
+--infile /home/tombs/Downloads/truth_ktdurham200/liv_3j_4j_1/train/liv_3j_4j_1_8_truth.h5 \
+--outfile /home/tombs/Downloads/truth_ktdurham200_images/liv_3j_4j_1/train/liv_3j_4j_1_8_truth_images.h5
 
 python gen_data/process_truth_to_images.py --random_rotate \
-    --infile /home/tombs/Downloads/truth_ktdurham200/liv_3j_4j_1/train/liv_3j_4j_1_8_truth.h5 \
-    --outfile /home/tombs/Downloads/truth_ktdurham200_images_rot/liv_3j_4j_1/train/liv_3j_4j_1_8_truth_images.h5
+--infile /home/tombs/Downloads/truth_ktdurham200/liv_3j_4j_1/train/liv_3j_4j_1_8_truth.h5 \
+--outfile /home/tombs/Downloads/truth_ktdurham200_images_rot/liv_3j_4j_1/train/liv_3j_4j_1_8_truth_images.h5
 
 """
 import argparse
@@ -103,7 +103,7 @@ def dump_truth_images(images, filename):
     if dirname:
         os.makedirs(dirname, exist_ok=True)
     with h5py.File(filename, "w") as file_:
-        dataset = file_.create_dataset("entries", data=images, compression="gzip")
+        file_.create_dataset("entries", data=images, compression="gzip")
     print("wrote %r" % filename)
 
 
