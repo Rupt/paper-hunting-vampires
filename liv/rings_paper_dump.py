@@ -8,7 +8,6 @@ python rings_paper_dump.py
 """
 import element
 import numpy
-import rings
 import rings_lib
 
 

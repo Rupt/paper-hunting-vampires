@@ -20,11 +20,9 @@ python rings.py
 """
 import json
 import math
-import os
 from numbers import Integral
 
 import element
-import lhe
 import numpy
 
 PDG_ID_TO_STRING = {
@@ -130,8 +128,12 @@ def lodds(process, pdg_id, momentum, helicity, ngrid=36):
         return process.unchecked(pdg_id, mom, ihel)
 
     for theta in numpy.linspace(0, 2 * math.pi, ngrid, endpoint=False):
-        original += call(rotxy(momentum, theta)) + call(rotxy(momentum_flip, theta))
-        inverted += call(rotxy(pomentum, theta)) + call(rotxy(pomentum_flip, theta))
+        original += call(rotxy(momentum, theta)) + call(
+            rotxy(momentum_flip, theta)
+        )
+        inverted += call(rotxy(pomentum, theta)) + call(
+            rotxy(pomentum_flip, theta)
+        )
 
     if original == 0 or inverted == 0:
         return 0.0

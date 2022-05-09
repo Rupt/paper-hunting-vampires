@@ -1,6 +1,4 @@
 """Mimic boosting an event as if in the heart of madgraph."""
-import math
-
 import lorentz
 import numpy
 

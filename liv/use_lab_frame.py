@@ -68,7 +68,9 @@ def modify_dsig(target):
         try:
             line = next(itlines)
         except StopIteration:
-            raise ValueError("No line %r in file %r" % (END_OF_LOCAL_VARIABLES, target))
+            raise ValueError(
+                "No line %r in file %r" % (END_OF_LOCAL_VARIABLES, target)
+            )
         out.append(line)
         if line == END_OF_LOCAL_VARIABLES:
             break
@@ -86,7 +88,9 @@ def modify_dsig(target):
         try:
             line = next(itlines)
         except StopIteration:
-            raise ValueError("No line %r in file %r" % (START_OF_BOOST, target))
+            raise ValueError(
+                "No line %r in file %r" % (START_OF_BOOST, target)
+            )
         if line == START_OF_BOOST:
             break
         out.append(line)

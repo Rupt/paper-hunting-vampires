@@ -66,7 +66,7 @@ def parse_output():
     parser.add_argument(
         "--lab",
         action="store_true",
-        help="modify the process to evaluate its matrix elements in the lab frame",
+        help="modify to evaluate matrix elements in the lab frame",
         default=None,
     )
     args = parser.parse_args()
@@ -81,7 +81,10 @@ def parse_output_standalone():
     parser.add_argument("output_standalone")
     parser.add_argument("title", type=str, help="directory name")
     parser.add_argument(
-        "--process", type=str, help="particle scattering process", default=PP_JJJ
+        "--process",
+        type=str,
+        help="particle scattering process",
+        default=PP_JJJ,
     )
     parser.add_argument(
         "--model", type=str, help="optional model to import", default=None
@@ -92,13 +95,18 @@ def parse_output_standalone():
 
 
 def parse_launch():
-    parser = argparse.ArgumentParser(description=("Generate samples with madgraph."))
+    parser = argparse.ArgumentParser(
+        description=("Generate samples with madgraph.")
+    )
     parser.add_argument("output_standalone")
     parser.add_argument("title", type=str, help="directory name")
     parser.add_argument("--seed", type=int, help="random seed", required=True)
     parser.add_argument("--name", type=str, help="output name", default=None)
     parser.add_argument(
-        "--nevents", type=int, help="target maximum number of events", default=10000
+        "--nevents",
+        type=int,
+        help="target maximum number of events",
+        default=10000,
     )
     parser.add_argument(
         "--ncores",
@@ -181,7 +189,9 @@ def output_standalone(title, process, *, model=None):
 
     # build
     subprocess.run(
-        ["make", "allmatrix2py.so"], shell=True, cwd=os.path.join(title, "SubProcesses")
+        ["make", "allmatrix2py.so"],
+        shell=True,
+        cwd=os.path.join(title, "SubProcesses"),
     )
 
     # make the title importable
@@ -190,7 +200,9 @@ def output_standalone(title, process, *, model=None):
             "ln",
             "-f",
             os.path.join(
-                title, "SubProcesses", "all_matrix2py.cpython-38-x86_64-linux-gnu.so"
+                title,
+                "SubProcesses",
+                "all_matrix2py.cpython-38-x86_64-linux-gnu.so",
             ),
             title,
         ]
@@ -200,7 +212,9 @@ def output_standalone(title, process, *, model=None):
         file_.write("from .all_matrix2py import *")
 
 
-def launch(title, seed, *, name=None, nevents=10000, ncores=None, set_kwargs=None):
+def launch(
+    title, seed, *, name=None, nevents=10000, ncores=None, set_kwargs=None
+):
     """Generate events for the given process."""
     assert seed != 0, "found seed == 0, which would be replaced by MadGraph"
     sets = {

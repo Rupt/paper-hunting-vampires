@@ -1,7 +1,5 @@
 """
-Create a Lorentz Invariance Violating (LIV) standard model extension for MadGraph
-
-with configured parameters, for MadGraph.
+Create a PV-mSME model for MadGraph, with configured parameters.
 
 Find usage examples are in README.md.
 
@@ -31,7 +29,9 @@ def main():
             "standard model extension for MadGraph"
         )
     )
-    parser.add_argument("parameters", type=str, help="parameters in json format")
+    parser.add_argument(
+        "parameters", type=str, help="parameters in json format"
+    )
     parser.add_argument("output_dir", type=str, help="output directory path")
 
     args = parser.parse_args()
@@ -43,7 +43,7 @@ def main():
     configure(parameters, args.output_dir)
 
 
-def configure(parameters, output_dir, verbose=False):
+def configure(parameters, output_dir):
     """Write an LIV SME model with given parameters to output_dir.
 
     Only supports 0, 0 generation indices.
@@ -61,7 +61,12 @@ def configure(parameters, output_dir, verbose=False):
             cname = f"{prefix}{mu}{nu}"
             cmunu = couplings[mu, nu, 0, 0]
             coupling = f"({cmunu.real}D0, {cmunu.imag}D0)"
-            command = ["sed", "-i", f"s/{cname} = .*/{cname} = {coupling}/g", *select]
+            command = [
+                "sed",
+                "-i",
+                f"s/{cname} = .*/{cname} = {coupling}/g",
+                *select,
+            ]
             subprocess.run(command)
 
     q, u, d = dict_to_qud(parameters)
@@ -69,6 +74,7 @@ def configure(parameters, output_dir, verbose=False):
     check_traceless_hermitian(u)
     check_traceless_hermitian(d)
     axup, axdn, veup, vedn = qud_to_avud(q, u, d)
+    verbose = True
     if verbose:
         print(axup[:, :, 0, 0].real)
         print(axdn[:, :, 0, 0].real)
@@ -135,7 +141,9 @@ def qud_to_dict(q, u, d):
     out = {}
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
+        for mu, nu, a, b in itertools.product(
+            range(4), range(4), range(3), range(3)
+        ):
             value = matrix[mu, nu, a, b]
             if value == 0:
                 continue
@@ -152,9 +160,12 @@ def dict_to_qud(qud_dict):
     d = numpy.empty_like(q)
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
-            key = f"{label}{mu}{nu}{a}{b}"
-            matrix[mu, nu, a, b] = complex(qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0))
+        for mu, nu, a, b in itertools.product(
+            range(4), range(4), range(3), range(3)
+        ):
+            matrix[mu, nu, a, b] = complex(
+                qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0)
+            )
 
     return q, u, d
 

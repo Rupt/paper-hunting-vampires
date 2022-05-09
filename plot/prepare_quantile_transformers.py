@@ -6,7 +6,7 @@ Usage:
 
 e.g.
 
-python plot/quantiles.py \
+python plot/prepare_quantile_transformers.py \
     --netpath /home/tombs/Downloads/models/jet_net_reco/ \
     --datapath /home/tombs/Downloads/reco_ktdurham200/ \
     --outpath results/
@@ -16,14 +16,12 @@ python plot/quantiles.py \
 import argparse
 import glob
 import gzip
-import json
 import os
 
 import hist_alpha
 import jet_lib
 import jet_net_lib
 import joblib
-import numpy
 from sklearn.preprocessing import QuantileTransformer
 
 
@@ -40,7 +38,9 @@ def main():
 
 def dump_quantile_transformer(netpath, datapath, outpath):
     signal = "liv_3j_4j_1"
-    (inpath,) = sorted(glob.glob(os.path.join(datapath, signal, "test", "*.h5")))
+    (inpath,) = sorted(
+        glob.glob(os.path.join(datapath, signal, "test", "*.h5"))
+    )
 
     net_transformer = do_net(signal, netpath, inpath)
     dump(net_transformer, os.path.join(outpath, "transformer_net.dat.gz"))

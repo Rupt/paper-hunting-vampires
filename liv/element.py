@@ -2,7 +2,7 @@
 from collections import defaultdict
 from collections.abc import Mapping
 from dataclasses import dataclass, field
-from numbers import Integral, Real
+from numbers import Integral
 from types import ModuleType
 
 import numpy

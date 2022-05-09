@@ -13,7 +13,8 @@ import matplotlib
 import numpy
 import plot_lib
 from matplotlib import pyplot
-from prepare_kinematics import FILENAME
+
+FILENAME = "results/kinematics.h5"
 
 # data
 

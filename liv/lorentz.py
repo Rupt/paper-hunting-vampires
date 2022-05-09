@@ -1,6 +1,10 @@
 """ Lorentz transformations. """
+import itertools
+import unittest
+
 import numba
 import numpy
+from mpmath import mp
 from numba import float64
 
 
@@ -24,7 +28,9 @@ def ym1_b2(b2):
     """Return (y - 1)/b2."""
     if b2 < 2 ** -6:
         # Taylor series about 0
-        return c0 + b2 * (c1 + b2 * (c2 + b2 * (c3 + b2 * (c4 + b2 * (c5 + b2 * c6)))))
+        return c0 + b2 * (
+            c1 + b2 * (c2 + b2 * (c3 + b2 * (c4 + b2 * (c5 + b2 * c6))))
+        )
     return (yamma(b2) - 1) / b2
 
 
@@ -47,11 +53,6 @@ def make_boost(bx, by, bz):
 
 
 # testing
-import itertools
-import unittest
-
-import mpmath
-from mpmath import mp
 
 
 def yamma_ref(b2):
@@ -176,7 +177,11 @@ class TestLorentz(unittest.TestCase):
         betas = vec4s[:, 1:] / vec4s[:, 0, numpy.newaxis]
         rng = numpy.random.Generator(numpy.random.Philox(123))
         betas = numpy.concatenate(
-            [betas, numpy.tanh(rng.normal(size=len(betas)))[:, numpy.newaxis] * betas]
+            [
+                betas,
+                numpy.tanh(rng.normal(size=len(betas)))[:, numpy.newaxis]
+                * betas,
+            ]
         )
 
         check, ref = listify(map(make_boost_checkref, betas))

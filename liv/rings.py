@@ -20,7 +20,6 @@ python rings.py
 """
 import math
 import os
-from numbers import Integral
 
 import element
 import lhe
@@ -30,7 +29,7 @@ import rings_lib
 import standalone.liv_axial1 as pv_msme
 import standalone.standard_jjj as standard
 from matplotlib import pyplot
-from rings_lib import PDG_ID_TO_STRING, parity, rotxy, rotyz_pi, xy_from
+from rings_lib import PDG_ID_TO_STRING, xy_from
 
 # import standalone.trial_c03_c30_1_1 as pv_msme
 # import standalone.trial_c03_c30_1_m1 as pv_msme
@@ -76,7 +75,7 @@ def main():
         stats = event_stats(events[i])
         try:
             plot_rings(f"liv_{i}", liv, *stats)
-        except:
+        except BaseException:
             print("oopsie")
             print(*stats)
 
@@ -88,7 +87,9 @@ def main():
         plot_rings(f"sm_{i}", sm, *stats)
 
 
-def plot_rings(name, process, pdg_id, momentum, helicity, ngrid=128, helicity_sum=True):
+def plot_rings(
+    name, process, pdg_id, momentum, helicity, ngrid=128, helicity_sum=True
+):
     """Make plots of matrix elements under rotations and parity."""
     title = (
         r" ".join(map(PDG_ID_TO_STRING.get, pdg_id[:2]))
@@ -123,12 +124,14 @@ def plot_rings(name, process, pdg_id, momentum, helicity, ngrid=128, helicity_su
     total_err *= scale
     potal *= scale
     potal_err *= scale
-    print(f"total                 : {total: .2f} +- {total_err:.2f} x 10^{lscale}")
-    print(f"total (parity flipped): {potal: .2f} +- {potal_err:.2f}")
-    print(f"lodds                 : {lodds: .2e}")
+    print(f"total            : {total: .2f} +- {total_err:.2f} x 10^{lscale}")
+    print(f"total (P flipped): {potal: .2f} +- {potal_err:.2f}")
+    print(f"lodds            : {lodds: .2e}")
 
     # plot
-    figure, axis = pyplot.subplots(figsize=(6, 3), dpi=200, tight_layout=(0, 0, 0))
+    figure, axis = pyplot.subplots(
+        figsize=(6, 3), dpi=200, tight_layout=(0, 0, 0)
+    )
 
     lims = []
 
@@ -180,7 +183,8 @@ def plot_rings(name, process, pdg_id, momentum, helicity, ngrid=128, helicity_su
             + r"$A = \int\!\mathcal{M}(x) ds(x) = %.2f \pm %.2f ~~(\times 10^{%d})$"
             % (total, total_err, lscale)
             + "\n"
-            + r"$B = \int\!\mathcal{M}(Px) ds(x) = %.2f \pm %.2f$" % (potal, potal_err)
+            + r"$B = \int\!\mathcal{M}(Px) ds(x) = %.2f \pm %.2f$"
+            % (potal, potal_err)
             + "\n"
             + r"$\rightarrow \log A/B = %s$" % latex2e(lodds)
         ),
@@ -207,7 +211,8 @@ def plot_rings(name, process, pdg_id, momentum, helicity, ngrid=128, helicity_su
         mom = momentum[i]
         hel = helicity[i]
         data.append(
-            "%s (%.1f, %.1f, %.1f, %.1f) %+d" % (part.replace("~", r"x"), *mom, hel)
+            "%s (%.1f, %.1f, %.1f, %.1f) %+d"
+            % (part.replace("~", r"x"), *mom, hel)
         )
     data = "\n".join(data)
 

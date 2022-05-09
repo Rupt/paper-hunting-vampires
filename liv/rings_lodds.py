@@ -10,7 +10,6 @@ e.g.
 python rings_lodds.py /home/tombs/Cambridge/lester_flips/sm_atlas_200k.lhe
 
 """
-import argparse
 import math
 import sys
 from numbers import Integral
@@ -93,8 +92,12 @@ def ring_lodds(process, pdg_id, momentum, helicity, ngrid=36):
         return process.unchecked(pdg_id, mom, ihel)
 
     for theta in numpy.linspace(0, 2 * numpy.pi, ngrid, endpoint=False):
-        original += call(rotxy(momentum, theta)) + call(rotxy(momentum_flip, theta))
-        inverted += call(rotxy(pomentum, theta)) + call(rotxy(pomentum_flip, theta))
+        original += call(rotxy(momentum, theta)) + call(
+            rotxy(momentum_flip, theta)
+        )
+        inverted += call(rotxy(pomentum, theta)) + call(
+            rotxy(pomentum_flip, theta)
+        )
 
     if original == 0 or inverted == 0:
         return 0.0

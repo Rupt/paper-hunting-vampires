@@ -18,7 +18,7 @@ import lhe
 import numpy
 import standalone.liv_random_jjj as liv_random
 import standalone.standard_jjj as standard
-from element import PDG, Process
+from element import Process
 
 # import standalone.liv_1u10_1u30_jjj as liv_1u10_1u30
 
@@ -33,7 +33,6 @@ def main():
     sm = Process(standard)
     liv = Process(liv_random)
 
-    # TODO configure
     reweight(filename_in, sm, liv, filename_out, 1234)
 
 
@@ -116,33 +115,15 @@ def event_weight(event_element, to_process, from_process):
         momentum[i] = [p.e, p.px, p.py, p.pz]
         helicity[i] = p.helicity
 
-    # reject high pz jets to improve sampling
-    # TODO
-    # if abs(momentum[2:, 3]).max() > 1000:
-    # return 0
-
-    # top = to_process(pdg_id, momentum, helicity)
-    # bot = from_process(pdg_id, momentum, helicity)
-    # TODO handle helicity carefully
     # bot: helicity sum
     # top: sample a new helicity (useful to have ihel to array function)
     top = to_process(pdg_id, momentum, -1)
     bot = from_process(pdg_id, momentum, -1)
 
-    # print()
-    # print("liv")
-    # for i in range(1, 32 + 1):
-    # print(i, to_process(pdg_id, momentum, i))
-    # print("sm")
-    # for i in range(1, 32 + 1):
-    # print(i, from_process(pdg_id, momentum, i))
-    # TODO hacked to get some samples out
+    # hacked to get some samples out
     r = top / bot
-    # if r > 20:
-    # print(r)
-    # print(pdg_id)
-    # print(momentum)
-    # TODO selecting to get a decent # of samples out
+
+    # selecting to get a decent # of samples out
     if not (2 < r < 10):
         r = 0.0
     return r
