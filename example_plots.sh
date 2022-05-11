@@ -11,7 +11,7 @@ python plot/plot_parity_transformed.py
 python plot/plot_two_bin_stats.py
 python plot/plot_rings.py
 python plot/plot_kinematics.py
-python plot/plot_images.py
+PYTHONPATH=$PYTHONPATH:parity_tests python plot/plot_images.py
 python plot/plot_cnn.py
 
 deactivate

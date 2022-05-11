@@ -10,4 +10,5 @@ env_basic/bin/activate:
 	numpy==1.22.3 \
 	matplotlib==3.5.2 \
 	h5py==3.6.0 \
+	torch==1.11.0 \
 	)
