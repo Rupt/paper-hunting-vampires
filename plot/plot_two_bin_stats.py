@@ -234,7 +234,7 @@ def bisectf(func, lo, hi):
 
 def llr(sigma):
     """Return the Gaussian sigma for log likelihood ratio llr."""
-    return -0.5 * sigma ** 2
+    return -0.5 * sigma**2
 
 
 def sigma(llr):

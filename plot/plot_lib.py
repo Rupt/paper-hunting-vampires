@@ -75,7 +75,7 @@ def hist_sqrterr(
 ):
     """Draw a histogram to axis with sqrt(n) errorbar shading."""
     x, edges = x_and_edges
-    return hist_err(axis, x, x ** 0.5, edges, normed, color, alpha, **kwargs)
+    return hist_err(axis, x, x**0.5, edges, normed, color, alpha, **kwargs)
 
 
 def hist_err(
@@ -134,8 +134,8 @@ def hist_ratio(
     y, edges_check = y_and_edges
     numpy.testing.assert_array_equal(edges, edges_check)
 
-    xerr = x ** 0.5
-    yerr = y ** 0.5
+    xerr = x**0.5
+    yerr = y**0.5
 
     if normed:
         xnorm = 1 / x.sum()

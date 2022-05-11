@@ -1,4 +1,5 @@
-"""Dump p_T histogram plots.
+"""
+Dump p_T histogram plots.
 
 Usage:
 
@@ -87,11 +88,11 @@ def plot_pt(lambda_to_x_and_edges):
         alpha=0.5,
     )
 
-    axis_hi.set_ylabel(r"$\mathrm{normalized}~/~\mathrm{GeV}$")
+    axis_hi.set_ylabel(r"$\textrm{normalized}~/~\mathrm{Ge\kern-0.15ex V}$")
     axis_hi.set_yscale("log")
 
-    axis_lo.set_ylabel(r"$\mathrm{ratio~to~SM}$")
-    axis_lo.set_xlabel(r"$\mathrm{p_T}~/~\mathrm{GeV}$")
+    axis_lo.set_ylabel(r"$\textrm{ratio~to~SM}$")
+    axis_lo.set_xlabel(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$")
     axis_lo.set_xlim(xmin, xmax)
     axis_lo.set_ylim(0, 7)
 

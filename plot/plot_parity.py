@@ -72,7 +72,7 @@ def plot_both(*, scale, lumi_ifb):
     # axis1: net f raw
     x, edges = load_hist_original(label)
     yield_ = x * scale
-    err = (x ** 0.5) * scale
+    err = (x**0.5) * scale
 
     lw = 1.5
 
@@ -114,7 +114,7 @@ def plot_both(*, scale, lumi_ifb):
     # axis2: net f transformed
     x, edges = load_hist_transformed(label)
     yield_ = x * scale
-    err = (x ** 0.5) * scale
+    err = (x**0.5) * scale
 
     poly_hist_real, _ = hist_err(
         axis2,

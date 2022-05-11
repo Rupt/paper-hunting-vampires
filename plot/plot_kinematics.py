@@ -148,7 +148,7 @@ def plot_combo_t(out_path, data, phi, cmap):
     figure.text(
         0.999,  # x
         0.01,  # y
-        r"$\textrm{/ GeV}$",
+        r"$/~\mathrm{Ge\kern-0.15ex V}$",
         horizontalalignment="right",
         verticalalignment="bottom",
         fontsize=9,
@@ -267,7 +267,7 @@ def plot_combo_z(out_path, data, phi, cmap):
     figure.text(
         0.999,  # x
         0.01,  # y
-        r"$\textrm{/ GeV}$",
+        r"$/~\mathrm{Ge\kern-0.15ex V}$",
         horizontalalignment="right",
         verticalalignment="bottom",
         fontsize=9,

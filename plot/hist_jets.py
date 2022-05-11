@@ -121,7 +121,7 @@ def select_njets(ps, njets):
 def pt(ps, iparticle):
     x = ps[:, 4 * iparticle]
     y = ps[:, 4 * iparticle + 1]
-    return (x ** 2 + y ** 2) ** 0.5
+    return (x**2 + y**2) ** 0.5
 
 
 def ht(ps):
@@ -161,7 +161,7 @@ def eta(ps, iparticle):
     x = ps[:, 4 * iparticle + 0]
     y = ps[:, 4 * iparticle + 1]
     z = ps[:, 4 * iparticle + 2]
-    p = (x ** 2 + y ** 2 + z ** 2) ** 0.5
+    p = (x**2 + y**2 + z**2) ** 0.5
     return numpy.arctanh(z / p)
 
 
