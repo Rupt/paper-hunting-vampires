@@ -301,10 +301,10 @@ def make_cmap_white_to_color(rgb):
     )
 
 
-CMAP = make_cmap_white_to_color(plot_lib.cmap_purple_orange(0))
+CMAP = make_cmap_white_to_color(plot_lib.cmap_purple_orange(0.5))
 
 
-# stolen from postprocess_delphes to avoid pandas imoport
+# stolen from postprocess_delphes to avoid pandas import
 
 
 def load_hdf(filename):
