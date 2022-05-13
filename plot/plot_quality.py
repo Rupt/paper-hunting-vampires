@@ -9,7 +9,7 @@ python plot/plot_quality.py
 """
 import numpy
 import plot_lib
-from plot_lib import plot_qualities
+from matplotlib import pyplot
 
 
 def main():
@@ -135,7 +135,11 @@ def plot_quality_images():
             "<",
             cmap(0.5),
         ),
-        "CNN calo": ("results/tower_cnn_reco_private_test.csv", ">", cmap(0)),
+        "CNN calo-image": (
+            "results/tower_cnn_reco_private_test.csv",
+            ">",
+            cmap(0),
+        ),
     }
 
     figure, axis = plot_qualities(label_to_spec, select_pi)
@@ -177,7 +181,7 @@ def plot_quality_both():
             "<",
             cmap_image(0.5),
         ),
-        "CNN calo": (
+        "CNN calo-image": (
             "results/tower_cnn_reco_private_test.csv",
             ">",
             cmap_image(0),
@@ -186,6 +190,69 @@ def plot_quality_both():
 
     figure, axis = plot_qualities(label_to_spec, select_pi)
     plot_lib.save_fig(figure, "quality_both.png")
+
+
+def plot_qualities(
+    label_to_spec, select_func=None, *, sigma=1, xlim=(-0.05, 1.05), space=0.1
+):
+    figure, axis = pyplot.subplots(
+        figsize=(4.8, 2.4),
+        dpi=400,
+        gridspec_kw={
+            "top": 0.99,
+            "right": 0.995,
+            "bottom": 0.18,
+            "left": 0.135,
+        },
+    )
+
+    axis.plot([-0.05, 1.05], [0, 0], "k--", lw=1)
+
+    nlabels = len(label_to_spec)
+    errorbars = []
+    for i, (label, spec) in enumerate(label_to_spec.items()):
+        csvpath, marker, color = spec
+        values = numpy.loadtxt(csvpath, skiprows=1, delimiter=",")
+        lambdas, ntest, qualities, quality_stds = values.T
+
+        if select_func is None:
+            select = slice(None)
+        else:
+            select = select_func(lambdas)
+
+        offset = 0.25 * space * (i / nlabels - 0.5)
+
+        bar = axis.errorbar(
+            lambdas[select] + offset,
+            qualities[select] * 1e6,
+            yerr=quality_stds[select] * 1e6 * sigma,
+            color=color,
+            marker=marker,
+            markersize=4,
+            markeredgewidth=1,
+            markerfacecolor="w",
+            linewidth=0,
+            elinewidth=1,
+        )
+        errorbars.append(bar)
+
+    labels = [
+        r"$\textrm{%s}$" % label.replace(" ", "~") for label in label_to_spec
+    ]
+    axis.legend(
+        errorbars,
+        labels,
+        frameon=False,
+        loc="upper left",
+        borderpad=0,
+    )
+
+    axis.set_xlim(*xlim)
+
+    axis.set_xlabel(r"$\lambda_\mathrm{PV}$")
+    axis.set_ylabel(r"$Q \pm %r\sigma$" % sigma)
+
+    return figure, axis
 
 
 # selectors

@@ -150,6 +150,7 @@ def plot_both(*, scale, lumi_ifb):
     axis2.set_ylim(0, 0.9)
 
     axis2.set_xticks([0, 0.5, 1])
+    axis2.set_yticks([0, 0.5])
 
     outname = "hist_both_net"
     outname += ".png"

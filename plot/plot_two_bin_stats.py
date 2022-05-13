@@ -101,7 +101,7 @@ def plot_twobin():
         range=(-1, 1),
         histtype="step",
         zorder=1.8,
-        color=plot_lib.cmap_purple_orange(0.5),
+        color=plot_lib.cmap_purple_orange(0),
     )
 
     background = (*plot_lib.cmap_purple_orange(1)[:3], 0.05)

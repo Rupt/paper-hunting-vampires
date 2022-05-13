@@ -21,7 +21,6 @@ def main():
 
     # Normalize to SM cross-section
     lumi_ifb = 1.0  # ifb
-    # TODO? 139.0  # ifb
 
     # standard model xs
     lambda_, xss_fb = numpy.loadtxt(
@@ -195,7 +194,7 @@ def plot_both(alphaname, netname, *, scale, lumi_ifb, linear=False):
         ax.text(
             0.02,
             0.09,
-            r"$p\textrm{--}p~~\sqrt{s}=13~\mathrm{TeV}~~%r~\mathrm{fb}^{-1}$"
+            r"$p\textrm{--}p~~\sqrt{s}=13~\mathrm{TeV}~~%d~\mathrm{fb}^{-1}$"
             % lumi_ifb,
             horizontalalignment="left",
             verticalalignment="bottom",

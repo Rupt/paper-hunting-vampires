@@ -22,7 +22,7 @@ from cnn import (
 )
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 
-EXTENT = [-2.8, 2.8, -numpy.pi, numpy.pi]
+EXTENT = [-3.2, 3.2, -numpy.pi, numpy.pi]
 
 
 def main():
@@ -38,7 +38,9 @@ def main():
     net = parity_odd_cnn()  # load saved one...!?
 
     print("plotting images")
-    plot_image(im_jet, "original_image", r"$\textrm{Original image}$")
+    plot_image(im_jet, "original_image", r"$\textrm{Original}$")
+    # the parity_flip function is misnamed and in fact flips and rotates,
+    # so another 32 / 2 == 16 rotation fixes that
     plot_image(
         roll_down_phi(parity_flip(im_jet), 16).reshape(32, 32),
         "parity_flip",
@@ -47,7 +49,7 @@ def main():
     plot_image(
         parity_flip(im_jet).reshape(32, 32),
         r"parity_flip_rotated_phi",
-        r"$\textrm{Parity flip, rotated}~\phi$",
+        r"$\textrm{Parity flip, rotate}~\phi$",
     )
     plot_image(
         rotate_180(im_jet).reshape(32, 32),
@@ -60,186 +62,6 @@ def main():
     plot_conv_filter_1row(im_jet, net)
     plot_conv_filters_2rows(im_jet, net)
 
-    # not used any more
-    plot_3_images(im_jet, net)
-    plot_4_images(im_jet, net)
-
-
-def plot_3_images(im, net):
-    fig, axs = plt.subplots(1, 3, figsize=(18, 13), dpi=300)
-    # -----------
-    # Note .T for imshow
-    im0 = axs[0].imshow(
-        im.reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-    im1 = axs[1].imshow(
-        roll_down_phi(parity_flip(im), 16).reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-    im2 = axs[2].imshow(
-        parity_flip(im).reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-
-    cbar0 = colourbar(fig, axs[0], im0)
-    cbar1 = colourbar(fig, axs[1], im1)
-    cbar2 = colourbar(fig, axs[2], im2)
-
-    cbar0.ax.set_title(
-        r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", rotation=0, size=20
-    )
-    cbar1.ax.set_title(
-        r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", rotation=0, size=20
-    )
-    cbar2.ax.set_title(
-        r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", rotation=0, size=20
-    )
-
-    axs[0].set_title(r"$\textrm{Original image}$", size=18)
-    axs[1].set_title(r"$\textrm{Parity flip}$", size=18)
-    axs[2].set_title(r"$\textrm{Parity flip, translated}~\phi$", size=18)
-    axs[0].set_ylabel(r"$\phi$", size=22)
-    axs[2].set_xlabel(r"$\eta$", size=22)
-    axs[0].set_xlabel(r"$\eta$", size=22)
-    axs[1].set_xlabel(r"$\eta$", size=22)
-    axs[2].set_xlabel(r"$\eta$", size=22)
-
-    plt.figtext(
-        0.28,
-        0.28,
-        "net output = {:.3f}".format(net(im).item()),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.figtext(
-        0.55,
-        0.28,
-        "net output = {:.3f}".format(
-            net(roll_down_phi(parity_flip(im), 16)).item()
-        ),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.figtext(
-        0.825,
-        0.28,
-        "net output = {:.3f}".format(net(parity_flip(im)).item()),
-        horizontalalignment="right",
-        size=16,
-    )
-
-    plt.savefig(
-        os.path.join("plots", "jetimage3panes.png"),
-        facecolor="white",
-        transparent=False,
-        bbox_inches="tight",
-    )
-
-
-def plot_4_images(im, net):
-    fig, axs = plt.subplots(1, 4, figsize=(24, 13), dpi=100)
-    # -----------
-    # Note .T for image show!
-    im0 = axs[0].imshow(
-        im.reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-    im1 = axs[1].imshow(
-        roll_down_phi(parity_flip(im), 16).reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-    im2 = axs[2].imshow(
-        parity_flip(im).reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-    im3 = axs[3].imshow(
-        rotate_180(im).reshape(32, 32).T.numpy(),
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=500,
-    )
-
-    cbar0 = colourbar(fig, axs[0], im0)
-    cbar1 = colourbar(fig, axs[1], im1)
-    cbar2 = colourbar(fig, axs[2], im2)
-    cbar3 = colourbar(fig, axs[3], im3)
-
-    cbar0.ax.tick_params(axis="both", which="major", labelsize=12)
-    cbar1.ax.tick_params(axis="both", which="major", labelsize=12)
-    cbar2.ax.tick_params(axis="both", which="major", labelsize=12)
-    cbar3.ax.tick_params(axis="both", which="major", labelsize=12)
-
-    cbar0.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", size=22)
-    cbar1.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", size=22)
-    cbar2.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", size=22)
-    cbar3.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$", size=22)
-
-    axs[0].tick_params(axis="both", which="major", labelsize=13)
-    axs[1].tick_params(axis="both", which="major", labelsize=13)
-    axs[2].tick_params(axis="both", which="major", labelsize=13)
-    axs[3].tick_params(axis="both", which="major", labelsize=13)
-
-    axs[0].set_title(r"$\textrm{Original image}$", size=18)
-    axs[1].set_title(r"$\textrm{Parity flip}$", size=18)
-    axs[2].set_title(r"$\textrm{Parity flip, translated}~\phi$", size=18)
-    axs[3].set_title(r"$\textrm{Beam flip}$", size=18)
-
-    axs[0].set_ylabel(r"$\phi$", size=22)
-    axs[2].set_xlabel(r"$\eta$", size=22)
-    axs[0].set_xlabel(r"$\eta$", size=22)
-    axs[1].set_xlabel(r"$\eta$", size=22)
-    axs[2].set_xlabel(r"$\eta$", size=22)
-    axs[3].set_xlabel(r"$\eta$", size=22)
-    plt.figtext(
-        0.24,
-        0.28,
-        "net output = {:.3f}".format(net(im).item()),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.figtext(
-        0.44,
-        0.28,
-        "net output = {:.3f}".format(
-            net(roll_down_phi(parity_flip(im), 16)).item()
-        ),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.figtext(
-        0.64,
-        0.28,
-        "net output = {:.3f}".format(net(parity_flip(im)).item()),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.figtext(
-        0.85,
-        0.28,
-        "net output = {:.3f}".format(net(rotate_180(im)).item()),
-        horizontalalignment="right",
-        size=16,
-    )
-    plt.savefig(
-        os.path.join("plots", "jetimage4panes.png"),
-        facecolor="white",
-        transparent=False,
-        bbox_inches="tight",
-    )
-
 
 def plot_jets_and_energy(im_jet, im_tower):
 
@@ -251,10 +73,10 @@ def plot_jets_and_energy(im_jet, im_tower):
         sharex=True,
         sharey=True,
         gridspec_kw={
-            "top": 1.0,
-            "right": 0.99,
-            "bottom": 0.05,
-            "left": 0.01,
+            "top": 0.98,
+            "right": 0.93,
+            "bottom": 0.08,
+            "left": 0.09,
             "wspace": 0.25,
         },
     )
@@ -278,8 +100,8 @@ def plot_jets_and_energy(im_jet, im_tower):
         cmap=CMAP,
     )
 
-    axs[0].set_title(r"$\textrm{Energy deposits}$")
-    axs[1].set_title(r"$\textrm{Reco-jet}~p_\mathrm{T}$")
+    axs[0].set_title(r"$\quad\textrm{Energy deposits}$", loc="left")
+    axs[1].set_title(r"$\textrm{Reco-jet}~p_\mathrm{T}$", loc="left")
     cbar0 = colourbar(fig, axs[0], im0)
     cbar1 = colourbar(fig, axs[1], im1)
 
@@ -294,15 +116,61 @@ def plot_jets_and_energy(im_jet, im_tower):
     cbar0.ax.tick_params(axis="both", which="major")
     cbar1.ax.tick_params(axis="both", which="major")
 
-    axs[0].set_xticks([-2.8, 0, 2.8])
+    axs[0].set_xticks([-3.2, 0, 3.2])
     axs[0].set_yticks([-numpy.pi, 0, numpy.pi])
     axs[0].set_yticklabels([r"$-\pi$", r"$0$", r"$\pi$"])
 
     plt.savefig(
-        os.path.join("plots", "jet_and_energy_image.png"),
+        os.path.join("plots", "image_jet_and_energy.png"),
         facecolor="white",
         transparent=False,
-        bbox_inches="tight",
+    )
+
+
+def plot_image(image, name, label):
+    """just a singular image instead of doing subplots"""
+
+    fig, ax = plt.subplots(
+        figsize=(2.4, 2.2),
+        dpi=300,
+        gridspec_kw={
+            "top": 1.0,
+            "right": 0.87,
+            "bottom": 0.05,
+            "left": 0.175,
+        },
+    )
+    # -----------
+    # Note .T for image show!
+    vmax = 500
+
+    image = image.reshape(32, 32).T.numpy()
+    assert image.max() < vmax
+
+    im = ax.imshow(
+        image,
+        cmap=CMAP,
+        extent=EXTENT,
+        vmax=vmax,
+    )
+
+    cbar = colourbar(fig, ax, im)
+    cbar.ax.set_yticks([0, vmax])
+    cbar.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$")
+
+    ax.tick_params(axis="both", which="major")
+    ax.set_title(label, loc="left")
+    ax.set_ylabel(r"$\phi$", labelpad=-1)
+    ax.set_xlabel(r"$\eta$", labelpad=0)
+
+    ax.set_xticks([-3.2, 0, 3.2])
+    ax.set_yticks([-numpy.pi, 0, numpy.pi])
+    ax.set_yticklabels([r"$-\pi$", r"$0$", r"$\pi$"])
+
+    plt.savefig(
+        os.path.join("plots", "image_{}.png".format(name)),
+        facecolor="white",
+        transparent=False,
     )
 
 
@@ -407,58 +275,11 @@ def plot_conv_filter_1row(im, net):
     )
 
 
-def plot_image(image, name, label):
-    """just a singular image instead of doing subplots"""
-
-    fig, ax = plt.subplots(
-        figsize=(2.4, 2.4),
-        dpi=300,
-        gridspec_kw={
-            "top": 1.0,
-            "right": 0.87,
-            "bottom": 0.05,
-            "left": 0.175,
-        },
-    )
-    # -----------
-    # Note .T for image show!
-    vmax = 500
-
-    image = image.reshape(32, 32).T.numpy()
-    assert image.max() < vmax
-
-    im = ax.imshow(
-        image,
-        cmap=CMAP,
-        extent=EXTENT,
-        vmax=vmax,
-    )
-
-    cbar = colourbar(fig, ax, im)
-    cbar.ax.set_yticks([0, vmax])
-    cbar.ax.set_title(r"$p_\mathrm{T}~/~\mathrm{Ge\kern-0.15ex V}$")
-
-    ax.tick_params(axis="both", which="major")
-    ax.set_title(label)
-    ax.set_ylabel(r"$\phi$", labelpad=-1)
-    ax.set_xlabel(r"$\eta$", labelpad=0)
-
-    ax.set_xticks([-2.8, 0, 2.8])
-    ax.set_yticks([-numpy.pi, 0, numpy.pi])
-    ax.set_yticklabels([r"$-\pi$", r"$0$", r"$\pi$"])
-
-    plt.savefig(
-        os.path.join("plots", "{}_image.png".format(name)),
-        facecolor="white",
-        transparent=False,
-    )
-
-
-def colourbar(fig, ax, im, **kwargs):
+def colourbar(fig, ax, im):
 
     divider = make_axes_locatable(ax)
     cax = divider.append_axes("right", size="5%", pad=0.05)
-    cbar = fig.colorbar(im, cax=cax, orientation="vertical", **kwargs)
+    cbar = fig.colorbar(im, cax=cax, orientation="vertical")
     return cbar
 
 
