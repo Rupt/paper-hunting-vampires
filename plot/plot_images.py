@@ -301,7 +301,7 @@ def make_cmap_white_to_color(rgb):
     )
 
 
-CMAP = make_cmap_white_to_color(plot_lib.cmap_purple_orange(0.5))
+CMAP = make_cmap_white_to_color(plot_lib.cmap_purple_orange(0.2))
 
 
 # stolen from postprocess_delphes to avoid pandas import
