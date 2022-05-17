@@ -16,17 +16,22 @@ from plot_lib import dual_subplots, hist_err, hist_ratio, save_fig
 
 
 def main():
-    plot_lib.set_default_context()
-    model = "liv_1"
-
-    plot_parity_reco_net(model, "tower_cnn_parity", xlim=(0, 1.5))
-    plot_parity_reco_net(model, "jets_cnn_parity", xlim=(0, 1.05))
-    plot_parity_reco_net(model, "truth_cnn_parity", xlim=(0, 1.05))
-    plot_parity_reco_net(model, "truth_rot_cnn_parity", xlim=(0, 1.05))
-    plot_parity_reco_net(model, "reco_net_parity", xlim=(0, 1.05))
     do_linear = False
-    if do_linear:
-        plot_parity_reco_net(model, "test_hist", linear=True)
+    plot_lib.set_default_context()
+
+    # n.b. need different xlim for different lambda, currently set for lambda = 1
+    for label in ("0", "p2", "p4", "p6", "p8", "1"):
+
+        model = "liv_{}".format(label)
+
+        print(model)
+        #plot_parity_reco_net(model, "tower_cnn_parity", xlim=(0, 1.5))
+        #plot_parity_reco_net(model, "jets_cnn_parity", xlim=(0, 1.05))
+        #plot_parity_reco_net(model, "truth_cnn_parity", xlim=(0, 1.05))
+        #plot_parity_reco_net(model, "truth_rot_cnn_parity", xlim=(0, 1.05))
+        plot_parity_reco_net(model, "reco_net_parity", xlim=(0, 1.05))
+        if do_linear:
+            plot_parity_reco_net(model, "test_hist", linear=True)
 
 
 def plot_parity_reco_net(label, histname, *, xlim=(0, 1), linear=False):
