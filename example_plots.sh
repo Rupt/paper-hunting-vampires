@@ -5,7 +5,7 @@ mkdir -p plots
 
 python plot/plot_ht.py
 python plot/plot_pt.py
-python plot/plot_quality.py
+python plot/plot_quality_sub.py
 python plot/plot_parity.py
 python plot/plot_parity_transformed.py
 python plot/plot_two_bin_stats.py
