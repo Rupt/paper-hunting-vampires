@@ -29,10 +29,14 @@ def main():
             "standard model extension for MadGraph"
         )
     )
-    parser.add_argument(
-        "parameters", type=str, help="parameters in json format"
-    )
+    parser.add_argument("parameters", type=str, help="parameters in json format")
     parser.add_argument("output_dir", type=str, help="output directory path")
+    parser.add_argument(
+        "--rotation_angle",
+        type=float,
+        help="rotate about the y axis by these many radians",
+        default=None,
+    )
 
     args = parser.parse_args()
 
@@ -40,15 +44,21 @@ def main():
         parameters = json.load(file_)
 
     # dump
-    configure(parameters, args.output_dir)
+    configure(parameters, args.output_dir, rotation_angle=args.rotation_angle)
 
 
-def configure(parameters, output_dir):
+def configure(parameters, output_dir, *, rotation_angle=None):
     """Write an LIV SME model with given parameters to output_dir.
 
     Only supports 0, 0 generation indices.
 
     (we use these for all generations)
+
+    Arguments:
+        ...
+        rotation_angle:
+            rotate about the y axis (Earth's pole axis in certain coordinates)
+            by this angle in radians
     """
     os.makedirs(output_dir, exist_ok=True)
     subprocess.run(["cp", "-r", "-T", template_dir(), output_dir])
@@ -70,6 +80,11 @@ def configure(parameters, output_dir):
             subprocess.run(command)
 
     q, u, d = dict_to_qud(parameters)
+    if rotation_angle is not None:
+        rot = _rotate_matrix(rotation_angle)
+        q = rot(q)
+        u = rot(u)
+        d = rot(d)
     check_traceless_hermitian(q)
     check_traceless_hermitian(u)
     check_traceless_hermitian(d)
@@ -119,6 +134,106 @@ def random_traceless_hermitian(rng):
     return c
 
 
+# earth rotation business
+
+
+def _rotate_matrix(theta):
+    """Return a function which rotates fourmatrices by angle theta.
+
+    In original frame
+        A = x.T @ M @ x
+
+    In transformed frame rotated by (orthogonal) matrix R, x' = R @ x
+
+        A = x.T @ R.T @ C @ R @ x
+
+        such that C' = R.T @ C @ R
+
+    Convention: if starting at positive z [0, 0, 0, 1], a rotation of pi/2
+    takes us to positive x [0, 1, 0, 0].
+
+
+    Test:
+    python -c "import configure; configure._test_rotate_matrix()"
+
+    """
+    # rotate x and x about y axis
+    sint = numpy.sin(theta)
+    cost = numpy.cos(theta)
+
+    big_r = numpy.array(
+        [
+            # e
+            [
+                1,
+                0,
+                0,
+                0,
+            ],
+            # x
+            [
+                0,
+                cost,
+                0,
+                sint,
+            ],
+            # y
+            [
+                0,
+                0,
+                1,
+                0,
+            ],
+            # z
+            [
+                0,
+                -sint,
+                0,
+                cost,
+            ],
+        ],
+        dtype=float,
+    )
+
+    def rot(m):
+        # big_r @ m @ big_r.T, but allow extended dimensions of m
+        return numpy.einsum("ij,jk...,kl->il...", big_r, m, big_r.T)
+
+    return rot
+
+
+def _test_rotate_matrix():
+    rng = numpy.random.Generator(numpy.random.Philox(123))
+
+    c = rng.normal(size=16).reshape(4, 4)
+    x = rng.normal(size=4)
+
+    acheck = x.T @ c @ x
+
+    for theta in [0.0, 0.1, 0.5 * numpy.pi, numpy.pi, 2 * numpy.pi]:
+        rot = _rotate_matrix(theta)
+        xdash = numpy.array(
+            [
+                x[0],
+                x[1] * numpy.cos(theta) + x[3] * numpy.sin(theta),
+                x[2],
+                x[3] * numpy.cos(theta) - x[1] * numpy.sin(theta),
+            ]
+        )
+        numpy.testing.assert_allclose(acheck, xdash.T @ rot(c) @ xdash)
+
+    numpy.testing.assert_allclose(_rotate_matrix(2 * numpy.pi)(c), c)
+
+    c2 = rng.normal(size=16).reshape(4, 4)
+
+    rot = _rotate_matrix(0.321)
+    rot_stack = numpy.stack([c, c2], axis=-1)[..., numpy.newaxis]
+    assert rot_stack.shape == (4, 4, 2, 1)
+    a_stack = rot(rot_stack)
+    numpy.testing.assert_array_equal(a_stack[:, :, 0, 0], rot(c))
+    numpy.testing.assert_array_equal(a_stack[:, :, 1, 0], rot(c2))
+
+
 # utility
 
 
@@ -141,9 +256,7 @@ def qud_to_dict(q, u, d):
     out = {}
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(
-            range(4), range(4), range(3), range(3)
-        ):
+        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
             value = matrix[mu, nu, a, b]
             if value == 0:
                 continue
@@ -160,12 +273,8 @@ def dict_to_qud(qud_dict):
     d = numpy.empty_like(q)
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(
-            range(4), range(4), range(3), range(3)
-        ):
-            matrix[mu, nu, a, b] = complex(
-                qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0)
-            )
+        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
+            matrix[mu, nu, a, b] = complex(qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0))
 
     return q, u, d
 
