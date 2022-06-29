@@ -26,7 +26,7 @@ c6 = 429 / 2048
 @numba.njit(float64(float64))
 def ym1_b2(b2):
     """Return (y - 1)/b2."""
-    if b2 < 2 ** -6:
+    if b2 < 2**-6:
         # Taylor series about 0
         return c0 + b2 * (
             c1 + b2 * (c2 + b2 * (c3 + b2 * (c4 + b2 * (c5 + b2 * c6))))
@@ -92,7 +92,7 @@ def make_boost_ref(bx, by, bz):
             (z, 0, 0, 0),
         )
     )
-    transform = mp.eye(4) + mp.sinh(eta) * k + (mp.cosh(eta) - 1) * k ** 2
+    transform = mp.eye(4) + mp.sinh(eta) * k + (mp.cosh(eta) - 1) * k**2
     return numpy.array(transform, dtype=float).reshape((4, 4))
 
 
@@ -125,10 +125,10 @@ def betas():
     irange = range(1, 20)
 
     return itertools.chain(
-        (2 ** -i for i in irange),
-        (numpy.random.rand() * 2 ** -i for i in irange),
-        (1 - 2 ** -i for i in irange),
-        (1 - max(numpy.random.rand() * 2 ** -i, 2 ** -53) for i in irange),
+        (2**-i for i in irange),
+        (numpy.random.rand() * 2**-i for i in irange),
+        (1 - 2**-i for i in irange),
+        (1 - max(numpy.random.rand() * 2**-i, 2**-53) for i in irange),
     )
 
 

@@ -299,7 +299,9 @@ def plot_qualities(
                 alpha=0.7,
             )
 
-    labels = [r"$\textrm{%s}$" % label.replace(" ", "~") for label in label_to_spec]
+    labels = [
+        r"$\textrm{%s}$" % label.replace(" ", "~") for label in label_to_spec
+    ]
     axis.legend(
         errorbars,
         labels,

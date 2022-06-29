@@ -119,7 +119,7 @@ def plot_rings(
     else:
         lodds = numpy.nan
     lscale = int(math.log10(max(total, potal)))
-    scale = 10 ** -lscale
+    scale = 10**-lscale
     total *= scale
     total_err *= scale
     potal *= scale

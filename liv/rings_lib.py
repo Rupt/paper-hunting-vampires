@@ -196,7 +196,7 @@ def test_rotxy():
         angle_target = [
             (math.pi, [e, -x, -y, z]),
             (math.pi / 2, [e, -y, x, z]),
-            (math.pi / 4, [e, (x - y) * 2 ** -0.5, (y + x) * 2 ** -0.5, z]),
+            (math.pi / 4, [e, (x - y) * 2**-0.5, (y + x) * 2**-0.5, z]),
         ]
         for angle, target in angle_target:
             adash = rotxy(a, angle)

@@ -139,7 +139,7 @@ def delta_r(p1, p2):
     phi2 = numpy.arctan2(p2[2], p2[1])
     dphi = min(abs(phi1 - phi2), 2 * numpy.pi - abs(phi1 - phi2))
 
-    return (dphi ** 2 + deta ** 2) ** 0.5
+    return (dphi**2 + deta**2) ** 0.5
 
 
 def eta(p):

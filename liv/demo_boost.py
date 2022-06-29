@@ -83,8 +83,8 @@ def boost(pp, xbk, ebeam):
         |βγ| = (1 - r**2) / (2r)
     """
     r = ebeam[0] * xbk[0] / pp[0, 0]
-    y = (r ** 2 + 1) / (2 * r)
-    by = (r ** 2 - 1) / (2 * r)
+    y = (r**2 + 1) / (2 * r)
+    by = (r**2 - 1) / (2 * r)
     if pp[3, 0] < 0:
         by = -by
 

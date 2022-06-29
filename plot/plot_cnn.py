@@ -25,10 +25,10 @@ def main():
         model = "liv_{}".format(label)
 
         print(model)
-        #plot_parity_reco_net(model, "tower_cnn_parity", xlim=(0, 1.5))
-        #plot_parity_reco_net(model, "jets_cnn_parity", xlim=(0, 1.05))
-        #plot_parity_reco_net(model, "truth_cnn_parity", xlim=(0, 1.05))
-        #plot_parity_reco_net(model, "truth_rot_cnn_parity", xlim=(0, 1.05))
+        # plot_parity_reco_net(model, "tower_cnn_parity", xlim=(0, 1.5))
+        # plot_parity_reco_net(model, "jets_cnn_parity", xlim=(0, 1.05))
+        # plot_parity_reco_net(model, "truth_cnn_parity", xlim=(0, 1.05))
+        # plot_parity_reco_net(model, "truth_rot_cnn_parity", xlim=(0, 1.05))
         plot_parity_reco_net(model, "reco_net_parity", xlim=(0, 1.05))
         if do_linear:
             plot_parity_reco_net(model, "test_hist", linear=True)
