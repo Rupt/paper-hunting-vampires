@@ -54,9 +54,7 @@ def run_processing(filename, in_dir, output_dir):
 
     # save the njets for further processing
     save_df(
-        njets220,
-        "{}_njets_{}GeV.pkl".format(out_name, pt_cut),
-        directory=output_dir,
+        njets220, "{}_njets_{}GeV.pkl".format(out_name, pt_cut), directory=output_dir,
     )
 
     print("done {} in time {:.1f} seconds".format(filename, time.time() - tic))
@@ -197,12 +195,7 @@ def calo_images(eta, phi, e):
     bin_range = [(-3.2, 3.2), (-np.pi, np.pi)]  # eta x phi
     bins = [32, 32]  # eta x phi
     image_both, xedges, yedges = np.histogram2d(
-        eta,
-        phi,
-        bins=bins,
-        range=bin_range,
-        density=False,
-        weights=e,
+        eta, phi, bins=bins, range=bin_range, density=False, weights=e,
     )
     return image_both, xedges, yedges
 
@@ -248,20 +241,13 @@ def jet_image(pt, eta, phi, mass):
     bins = [32, 32]  # eta x phi
 
     image, xedges, yedges = np.histogram2d(
-        eta,
-        phi,
-        bins=bins,
-        range=bin_range,
-        density=False,
-        weights=pt,
+        eta, phi, bins=bins, range=bin_range, density=False, weights=pt,
     )
 
     return image, xedges, yedges
 
 
-def save_jet_info(
-    events, name, out_dir=".", pt_cut=30, max_weight=None, seed=None
-):
+def save_jet_info(events, name, out_dir=".", pt_cut=30, max_weight=None, seed=None):
     """Make and save eta phi images for jets yielded from `events'.
 
     Apply pt_cut to all jets in the event"""
@@ -390,14 +376,10 @@ def save_jet_info(
         )
 
     print("\rdone {} events".format(i))
-    print(
-        "saving jets to hdf and pkl nevents saved = {}".format(len(histos_all))
-    )
+    print("saving jets to hdf and pkl nevents saved = {}".format(len(histos_all)))
 
     save_hdf(
-        histos_all,
-        "{}_histos_jets_cut_{}GeV".format(name, pt_cut),
-        directory=out_dir,
+        histos_all, "{}_histos_jets_cut_{}GeV".format(name, pt_cut), directory=out_dir,
     )
     save_hdf(
         histos_3j,
@@ -431,9 +413,7 @@ def save_jet_info(
     momenta_df = pd.DataFrame(momenta, columns=features).astype("float32")
     # print(momenta_df.dtypes)
     save_df(
-        momenta_df,
-        "{}_jet_df_cut_{}GeV.pkl".format(name, pt_cut),
-        directory=out_dir,
+        momenta_df, "{}_jet_df_cut_{}GeV.pkl".format(name, pt_cut), directory=out_dir,
     )
 
     # save pt, eta, phi, mass dataframe
@@ -468,7 +448,7 @@ def angular_to_cartesian(pt, eta, phi, mass):
     px = pt * np.cos(phi)
     py = pt * np.sin(phi)
     pz = pt * np.sinh(eta)
-    e = (pt**2 + pz**2 + mass**2) ** 0.5
+    e = (pt ** 2 + pz ** 2 + mass ** 2) ** 0.5
     return px, py, pz, e
 
 
@@ -538,9 +518,7 @@ def weight_info(filename, in_dir, out_dir):
     sum_weights_triggered = sum(weights_triggered)
     print(
         "pre trigger cuts sum = {:.1f}, post trigger cuts sum = {:.1f}, keep = {:.2f}".format(
-            sum_weights,
-            sum_weights_triggered,
-            sum_weights_triggered / sum_weights,
+            sum_weights, sum_weights_triggered, sum_weights_triggered / sum_weights,
         )
     )
 
@@ -631,7 +609,6 @@ def load_df(name, directory="."):
         df = pickle.load(handle)
 
     return df
-
 
 
 if __name__ == "__main__":

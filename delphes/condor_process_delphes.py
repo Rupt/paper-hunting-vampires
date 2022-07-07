@@ -6,9 +6,7 @@ from process_delphes_all import run_processing
 
 def main():
 
-    parser = argparse.ArgumentParser(
-        description="process delphes root files on condor"
-    )
+    parser = argparse.ArgumentParser(description="process delphes root files on condor")
 
     parser.add_argument("--filename", type=str)
     args = parser.parse_args()

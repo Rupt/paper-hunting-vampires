@@ -11,9 +11,7 @@ import os
 import tempfile
 
 
-DIR_DELPHES = (
-    "/usera/dnoel/Documents/parity/Delphes-3.5.0/"  # use . if current dir
-)
+DIR_DELPHES = "/usera/dnoel/Documents/parity/Delphes-3.5.0/"  # use . if current dir
 # calling
 def main():
     parser = argparse.ArgumentParser(

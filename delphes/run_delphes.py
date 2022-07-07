@@ -4,7 +4,7 @@ import tempfile
 import time
 import argparse
 
-DIR_DELPHES = '/usera/dnoel/Documents/parity/Delphes-3.5.0/'
+DIR_DELPHES = "/usera/dnoel/Documents/parity/Delphes-3.5.0/"
 CWD = os.path.dirname(os.path.realpath(__file__))
 
 
@@ -22,7 +22,6 @@ def main():
     )
     args = parser.parse_args()
 
-
     madgraph_dir = "data"
     delphes_dir = "output"
 
@@ -30,30 +29,33 @@ def main():
     out_dir = delphes_dir
     os.makedirs(out_dir, exist_ok=True)
 
-
     filename = "sm.lhe.gz"
-    seed = '0'
-    model = 'sm'
-    num = '0'
-    set_name = 'train'
+    seed = "0"
+    model = "sm"
+    num = "0"
+    set_name = "train"
     run_delphes(
-                    filename,
-                    in_dir,
-                    out_dir,
-                    seed,
-                    model,
-                    set_name,
-                    num,
-                    args.delphes_card,
-                    run_condor=args.condor,
-                    do_processing = True
-                )
-
+        filename,
+        in_dir,
+        out_dir,
+        seed,
+        model,
+        set_name,
+        num,
+        args.delphes_card,
+        run_condor=args.condor,
+        do_processing=True,
+    )
 
 
 # save pile up and no-pile up
 def get_delphes_sh_string(
-    filename, in_dir, out_dir, seed, tcl_file="delphes_card_ATLAS_PileUp_R04.tcl", nevents = 200000
+    filename,
+    in_dir,
+    out_dir,
+    seed,
+    tcl_file="delphes_card_ATLAS_PileUp_R04.tcl",
+    nevents=200000,
 ):
 
     if "PileUp" in tcl_file:
@@ -86,14 +88,23 @@ def get_delphes_sh_string(
         pileup_str=pileup_str,
         nevents=nevents,
         DIR_DELPHES=DIR_DELPHES,
-        CWD=CWD
+        CWD=CWD,
     )
 
     return sh_string
 
 
 def run_delphes(
-    filename, in_dir, out_dir, seed, model, set_name, num, tcl_file, run_condor=False, do_processing=False
+    filename,
+    in_dir,
+    out_dir,
+    seed,
+    model,
+    set_name,
+    num,
+    tcl_file,
+    run_condor=False,
+    do_processing=False,
 ):
     """unzip lhe.gz, run delphes with get_delphes_sh_string
     and then clean up
@@ -105,9 +116,11 @@ def run_delphes(
     lhe_filename = filename.replace(".gz", "")
     lhe_filepath = os.path.join(out_dir, lhe_filename)
 
-    sh_string = get_delphes_sh_string(lhe_filename, in_dir, out_dir, seed, tcl_file, nevents)
+    sh_string = get_delphes_sh_string(
+        lhe_filename, in_dir, out_dir, seed, tcl_file, nevents
+    )
 
-    if do_processing :
+    if do_processing:
         sh_string = add_processing_string(sh_string, filename, tcl_file, nevents)
 
     condor_run_filename = os.path.join(out_dir, "condor_run.sh")
@@ -139,7 +152,6 @@ def run_delphes(
         os.chdir(cwd)
 
 
-
 def print_seeds(models, sets, madgraph_dir, delphes_dir):
     """print all the seeds used to file
     - follows the same logic as the main loop"""
@@ -160,15 +172,16 @@ def print_seeds(models, sets, madgraph_dir, delphes_dir):
                 f.write("{}/{} seed = {}\n".format(in_dir, filename, seed))
     f.close()
 
-#---------------------------------
+
+# ---------------------------------
+
 
 def add_processing_string(sh_string, filename, delphes_card, nevents):
     """add to the delphes running job also the code for processing the delphes file"""
 
     filename_delphes = "{}_{}_{}events.root".format(
-                filename.replace(".lhe.gz", ""),
-                delphes_card.replace(".tcl", ""),
-                nevents)
+        filename.replace(".lhe.gz", ""), delphes_card.replace(".tcl", ""), nevents
+    )
 
     process_string = """
         # pwd
@@ -184,9 +197,12 @@ def add_processing_string(sh_string, filename, delphes_card, nevents):
         #remove the .root file
         rm condor_process_delphes.py
         rm process_delphes_all.py
-    """.format(filename_delphes=filename_delphes,
-        CWD=CWD)
+    """.format(
+        filename_delphes=filename_delphes, CWD=CWD
+    )
 
     return sh_string + process_string
+
+
 if __name__ == "__main__":
     main()
