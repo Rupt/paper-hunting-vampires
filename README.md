@@ -36,3 +36,8 @@ source example_pv_msme_lhe.sh 0.5
 ```bash
 source example_truth_jet.sh pv_msme_0p5.lhe.gz
 ```
+
+
+### Run Delphes reconstruction
+Follow environment setup in Delphes/README.md then
+```python run_delphes.py```
