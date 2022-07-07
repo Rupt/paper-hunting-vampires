@@ -29,9 +29,9 @@ def main():
     out_dir = delphes_dir
     os.makedirs(out_dir, exist_ok=True)
 
-    filename = "sm.lhe.gz"
+    filename = "pv_msme_0p5.lhe.gz"
     seed = "0"
-    model = "sm"
+    model = "pv_msme_0p5"
     num = "0"
     set_name = "train"
     run_delphes(
@@ -111,7 +111,7 @@ def run_delphes(
 
     Can reduce the number of arguments?"""
 
-    nevents = 20
+    nevents = 10_000
 
     lhe_filename = filename.replace(".gz", "")
     lhe_filepath = os.path.join(out_dir, lhe_filename)
