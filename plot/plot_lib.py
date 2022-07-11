@@ -20,11 +20,11 @@ def set_default_context():
     # use latex text / fonts to match document
     # https://matplotlib.org/stable/tutorials/text/usetex.html
     # paper plots use:
-    #       "text.usetex": True,
     #       "font.sans-serif": ["Helvetica"],
     # but this introduces annoying compatibility issues
     pyplot.rcParams.update(
         {
+            "text.usetex": True,
             "font.family": "sans-serif",
             "font.size": 10,
             "figure.facecolor": "w",

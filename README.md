@@ -6,15 +6,14 @@ Use a Linux environment with a recent version of **python 3**.
 
 For compatibility, it may be helpful to start from a clean conda environment. \
 The bundled version of MadGraph does **not** work with python 3.10. \
-We also require gfortran for MadGraph and tex for plotting fonts.
+We also require gfortran for MadGraph and texlive for plotting. \
 ```bash
-conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0
+conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0 texlive-core==20180414
 ```
 then to set up
 ```bash
 conda activate hunting-vampires
 ```
-
 
 # Generate paper plots
 All plots used in the paper (and some others) are produced from serialized data
