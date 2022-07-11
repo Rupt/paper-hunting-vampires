@@ -1,17 +1,18 @@
-# Software for:<br>Hunting for vampires and other unlikely forms of parity violation at the Large Hadron Collider
+# Supporting data and code for:<br>Hunting for vampires and other unlikely forms of parity violation at the Large Hadron Collider
 https://arxiv.org/abs/2205.09876
 
 # Usage
 Use a Linux environment with a recent version of **python 3**.
 
 For compatibility, it may be helpful to start from a clean conda environment. \
-The bundled version of MadGraph does **not** work with python 3.10.
+The bundled version of MadGraph does **not** work with python 3.10. \
+We also require gfortran for MadGraph and tex for plotting fonts.
 ```bash
-conda create -n blank python==3.9.12
+conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0 texlive-core
 ```
 then to set up
 ```bash
-conda activate blank
+conda activate hunting-vampires
 ```
 
 
