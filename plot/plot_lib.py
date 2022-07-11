@@ -19,11 +19,13 @@ def cmap_greens(x):
 def set_default_context():
     # use latex text / fonts to match document
     # https://matplotlib.org/stable/tutorials/text/usetex.html
+    # paper plots use:
+    #       "font.sans-serif": ["Helvetica"],
+    # but this introduces annoying compatibility issues
     pyplot.rcParams.update(
         {
             "text.usetex": True,
             "font.family": "sans-serif",
-            "font.sans-serif": ["Helvetica"],
             "font.size": 10,
             "figure.facecolor": "w",
             "axes.titlesize": 10,
