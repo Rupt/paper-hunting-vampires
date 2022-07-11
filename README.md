@@ -6,14 +6,18 @@ Use a Linux environment with a recent version of **python 3**.
 
 For compatibility, it may be helpful to start from a clean conda environment. \
 The bundled version of MadGraph does **not** work with python 3.10. \
-We also require gfortran for MadGraph and texlive for plotting. \
+We also require gfortran for MadGraph and texlive for plotting.
 ```bash
-conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0 texlive-core==20180414
+conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0
 ```
 then to set up
 ```bash
 conda activate hunting-vampires
 ```
+
+Some LaTeX context is also required for matplotlib, but I have failed to
+install it through conda (texlive-core doesn't work).
+From a CERN-linked environment, for example, you can link texlive with `export PATH=/cvmfs/sft.cern.ch/lcg/external/texlive/2020/bin/x86_64-linux:$PATH`.
 
 # Generate paper plots
 All plots used in the paper (and some others) are produced from serialized data
@@ -98,5 +102,5 @@ We don't attempt to set up a GPU; you can ignore the warning
 
 
 # Run Delphes reconstruction
-Follow environment setup in Delphes/README.md then
-```python run_delphes.py```
+Follow instructions in `delphes/README.md` for environment setup and execution.
+(`cd delphes`)

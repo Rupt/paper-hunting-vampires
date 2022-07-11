@@ -4,9 +4,9 @@ import tempfile
 import time
 import argparse
 
-DIR_DELPHES = "/usera/dnoel/Documents/parity/Delphes-3.5.0/"
+#DIR_DELPHES = "/usera/dnoel/Documents/parity/Delphes-3.5.0/"
 CWD = os.path.dirname(os.path.realpath(__file__))
-
+DIR_DELPHES = os.path.join(CWD, "Delphes-3.5.0")
 
 def main():
     parser = argparse.ArgumentParser(description="bin eta phi")
