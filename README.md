@@ -58,11 +58,11 @@ source example_truth_jet.sh pv_msme_0p5.lhe.gz
 ```
 (Note that the `0.5` above has become `0p5` here.)
 
-An example lhe with $\lambda_\textrm{PV} = 1$ and up to four partonic jets
-is included as `example_results/pv_msme_3j_4j_1_seed_0.lhe.gz`. \
+An example lhe (from the test set) with $\lambda_\textrm{PV} = 1$ and up to four partonic jets
+is included as `example_results/pv_msme_3j_4j_1_seed_80.lhe.gz`. \
 Extract it by executing:
 ```bash
-source example_truth_jet.sh example_results/pv_msme_3j_4j_1_seed_0.lhe.gz
+source example_truth_jet.sh example_results/pv_msme_3j_4j_1_seed_80.lhe.gz
 ```
 
 # Test a BDT model
