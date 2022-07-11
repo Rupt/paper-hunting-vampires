@@ -12,7 +12,8 @@ python plot/plot_two_bin_stats.py
 python plot/plot_rings.py
 python plot/plot_kinematics.py
 PYTHONPATH=$PYTHONPATH:parity_tests python plot/plot_images.py
-python plot/plot_cnn.py
+# TODO currently broken due to missing a input file
+# python plot/plot_cnn.py
 
 deactivate
 
