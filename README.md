@@ -66,7 +66,17 @@ source example_truth_jet.sh example_results/pv_msme_3j_4j_1_seed_80.lhe.gz
 ```
 
 # Test a BDT model
-TODO
+Lead a serialized BDT model and test it against the $\lambda_\textrm{PV} = 1$
+that we (could have) generated above.
+```bash
+source example_bdt.sh
+```
+This prints out a json-formatted report of its results.
+Therein:
+* `ntest` is the number of testing data,
+* `log_r_test` is the model-versus-symmetry $\log$-likelihood ratio, which equals $nQ$, and
+* `quality` is $Q$ with its standard mean and standard deviation estiamtes.
+
 
 # Test an NN model
 TODO
