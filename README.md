@@ -28,8 +28,13 @@ Choosing $\lambda_\textrm{PV} = 0.5$ as an example. \
 Again, this hops into an environment. \
 It then:
 * generates the mSME model for Madgraph,
-* runs Madgraph to simulate **3-jet** events under our kinematic selections (4-jet is very slow), and
+* modifies the Madgraph code to evaludate matrix elements in the lab frame(*),
+* runs Madgraph to simulate 3-partonic-jet events under our kinematic selections (4-jet is very slow), and
 * moves the lhe to the local directory as `pv_msme_0p5.lhe.gz`.
+
+(*) Madgraph is modified by the `--lab` arguments to `lib/madcontrol.py`.
+The modification is implemented in `liv/use_lab_frame.py`,
+and implements a Lorentz boost in each `liv/process/${PROCESS}/SubProcesses/*/auto_dsig?.f` file.
 
 We also leave lots of mess behind in the liv/ directory; you can use `git diff' to see what's there.
 
@@ -39,7 +44,7 @@ source example_pv_msme_lhe.sh 0.5
 ```
 
 # Extract truth-jet lhe data to h5
-We need to convert the lhe file
+For later use, we convert parts of the lhe file
 ([XML](http://harmful.cat-v.org/software/xml/)) to an efficient format.
 
 This script first converts it to padded four-momenta in an
