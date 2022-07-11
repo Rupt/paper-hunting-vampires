@@ -84,12 +84,12 @@ def truth_to_images(jets):
     pz = jets[:, 2::4]
     e = jets[:, 3::4]
 
-    pt = (px ** 2 + py ** 2) ** 0.5
-    p = (pt ** 2 + pz ** 2) ** 0.5
+    pt = (px**2 + py**2) ** 0.5
+    p = (pt**2 + pz**2) ** 0.5
     # missing particles have p=0 (and pz=0); these will be cleaned up later
     eta = numpy.arctanh(pz / numpy.where(p == 0, 1, p))
     phi = numpy.arctan2(py, px)
-    mass = numpy.maximum(0, e ** 2 - p ** 2) ** 0.5
+    mass = numpy.maximum(0, e**2 - p**2) ** 0.5
 
     images = numpy.zeros((len(pt), 32, 32), dtype=numpy.float32)
     for i, (pt_i, eta_i, phi_i, mass_i) in enumerate(zip(pt, eta, phi, mass)):

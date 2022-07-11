@@ -77,11 +77,11 @@ def jet_cuts(input_path, output_path, **kwargs):
         for i in range(nparticles):
             px, py, pz, e = event_i[4 * i : 4 * i + 4]
 
-            pt = (px ** 2 + py ** 2) ** 0.5
+            pt = (px**2 + py**2) ** 0.5
             if not pt > 220:
                 continue
 
-            p = (px ** 2 + py ** 2 + pz ** 2) ** 0.5
+            p = (px**2 + py**2 + pz**2) ** 0.5
             eta = numpy.arctanh(pz / p)
             if not abs(eta) < 2.8:
                 continue

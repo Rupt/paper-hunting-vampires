@@ -1,0 +1,9 @@
+{
+    "ntest": 2012006,
+    "log_r_test": 86.63581693146261,
+    "quality": {
+        "mean": 4.305942275095731e-05,
+        "sdev": 6.863695489300881e-06
+    },
+    "tag": "/r04/atlas/symmetries/data/reco_ktdurham200/liv_3j_4j_p3"
+}

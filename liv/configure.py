@@ -29,9 +29,7 @@ def main():
             "standard model extension for MadGraph"
         )
     )
-    parser.add_argument(
-        "parameters", type=str, help="parameters in json format"
-    )
+    parser.add_argument("parameters", type=str, help="parameters in json format")
     parser.add_argument("output_dir", type=str, help="output directory path")
     parser.add_argument(
         "--rotation_angle",
@@ -72,7 +70,10 @@ def configure(parameters, output_dir, *, rotation_angle=None):
         for mu, nu in itertools.product(range(4), range(4)):
             cname = f"{prefix}{mu}{nu}"
             cmunu = couplings[mu, nu, 0, 0]
-            coupling = f"({cmunu.real}D0, {cmunu.imag}D0)"
+            # match D fortran convention
+            cmunu_real = ("%.18e" % cmunu.real).replace("e", "D")
+            cmunu_imag = ("%.18e" % cmunu.imag).replace("e", "D")
+            coupling = f"({cmunu_real}, {cmunu_imag})"
             command = [
                 "sed",
                 "-i",
@@ -258,9 +259,7 @@ def qud_to_dict(q, u, d):
     out = {}
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(
-            range(4), range(4), range(3), range(3)
-        ):
+        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
             value = matrix[mu, nu, a, b]
             if value == 0:
                 continue
@@ -277,12 +276,8 @@ def dict_to_qud(qud_dict):
     d = numpy.empty_like(q)
 
     for label, matrix in [("q", q), ("u", u), ("d", d)]:
-        for mu, nu, a, b in itertools.product(
-            range(4), range(4), range(3), range(3)
-        ):
-            matrix[mu, nu, a, b] = complex(
-                qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0)
-            )
+        for mu, nu, a, b in itertools.product(range(4), range(4), range(3), range(3)):
+            matrix[mu, nu, a, b] = complex(qud_dict.get(f"{label}{mu}{nu}{a}{b}", 0))
 
     return q, u, d
 

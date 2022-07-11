@@ -1,0 +1,13 @@
+{
+    "ntest": 2000000,
+    "log_r_test": 21361.4534586668,
+    "quality": {
+        "mean": 0.0106807267293334,
+        "sdev": 9.689092985354364e-05
+    },
+    "tag": {
+        "datapath": "/r04/atlas/symmetries/data/truth_ktdurham200_cut/liv_3j_4j_p7",
+        "with_flav": true,
+        "with_hel": true
+    }
+}

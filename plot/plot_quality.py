@@ -250,7 +250,10 @@ def plot_qualities(
     axis.set_xlim(*xlim)
 
     axis.set_xlabel(r"$\lambda_\mathrm{PV}$")
-    axis.set_ylabel(r"$Q \pm %r\sigma~~(\times10^6)$" % sigma)
+    if sigma != 1:
+        axis.set_ylabel(r"$Q \pm %r\sigma~~(\times10^6)$" % sigma)
+    else:
+        axis.set_ylabel(r"$Q \pm \sigma~~(\times10^6)$")
 
     return figure, axis
 

@@ -1,0 +1,13 @@
+{
+    "ntest": 2000000,
+    "log_r_test": 37948.48546385765,
+    "quality": {
+        "mean": 0.018974242731928825,
+        "sdev": 0.00012575653090607375
+    },
+    "tag": {
+        "datapath": "/home/tombs/truth_ktdurham200_cut/liv_3j_4j_10",
+        "with_flav": true,
+        "with_hel": false
+    }
+}

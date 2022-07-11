@@ -1,0 +1,9 @@
+{
+    "ntest": 1839867,
+    "log_r_test": 0.0005719065937903334,
+    "quality": {
+        "mean": 3.108412693908491e-10,
+        "sdev": 2.721075142986251e-09
+    },
+    "tag": "/home/tombs/reco_ktdurham200/sm_3j_4j"
+}

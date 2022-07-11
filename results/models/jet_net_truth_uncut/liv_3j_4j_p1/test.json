@@ -1,0 +1,9 @@
+{
+    "ntest": 2000000,
+    "log_r_test": 0.2691069767024601,
+    "quality": {
+        "mean": 1.3455348835123004e-07,
+        "sdev": 2.855967693449202e-07
+    },
+    "tag": "/home/tombs/truth_ktdurham200/liv_3j_4j_p1"
+}

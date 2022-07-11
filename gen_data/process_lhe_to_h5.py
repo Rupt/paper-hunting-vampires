@@ -88,7 +88,7 @@ def read_events(file_name_or_object, nparticles, dtype):
         # the first two elements are partons
         out_i = []
         for i, p in enumerate(event.particles[2:], 2):
-            out_i.append((p.px ** 2 + p.py ** 2, i))
+            out_i.append((p.px**2 + p.py**2, i))
 
         ps = []
         fs = []

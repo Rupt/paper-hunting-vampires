@@ -1,0 +1,13 @@
+{
+    "ntest": 1988564,
+    "log_r_test": 66.65026692270476,
+    "quality": {
+        "mean": 3.3516782423248515e-05,
+        "sdev": 1.0229125109617598e-05
+    },
+    "tag": {
+        "datapath": "/home/tombs/reco_ktdurham200/liv_3j_4j_p3",
+        "with_flav": false,
+        "with_hel": false
+    }
+}

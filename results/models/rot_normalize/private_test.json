@@ -1,0 +1,11 @@
+{
+    "ntest": 6000000,
+    "log_r_test": 62.52274397411384,
+    "quality": {
+        "mean": 1.0420457329018973e-05,
+        "sdev": 3.7535332921834197e-06
+    },
+    "tag": {
+        "datapath": "/home/tombs/truth_ktdurham200_cut/liv_rot"
+    }
+}
