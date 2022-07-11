@@ -8,7 +8,7 @@ For compatibility, it may be helpful to start from a clean conda environment. \
 The bundled version of MadGraph does **not** work with python 3.10. \
 We also require gfortran for MadGraph and tex for plotting fonts.
 ```bash
-conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0 texlive-core
+conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0
 ```
 then to set up
 ```bash
