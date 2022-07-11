@@ -9,7 +9,7 @@ env_basic/bin/activate:
 	)
 
 env_bdt/bin/activate:
-	python3 -m venv env_basic
+	python3 -m venv env_bdt
 	( \
 	source $@; \
 	pip install --upgrade pip; \
@@ -17,7 +17,7 @@ env_bdt/bin/activate:
 	)
 
 env_nn/bin/activate:
-	python3 -m venv env_basic
+	python3 -m venv env_nn
 	( \
 	source $@; \
 	pip install --upgrade pip; \
