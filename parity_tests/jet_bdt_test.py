@@ -14,8 +14,8 @@ python parity_tests/jet_bdt_test.py \
 import argparse
 import os
 
-from jet_bdt_lib import bdt_test, fit_load
-from jet_lib import load_invariant_momenta, result_dump, stitch_parts
+from .jet_bdt_lib import bdt_test, fit_load
+from .jet_lib import load_invariant_momenta, result_dump, stitch_parts
 
 
 def main():

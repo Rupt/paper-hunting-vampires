@@ -11,7 +11,7 @@ import jax
 import joblib
 import numpy
 import optax
-from jet_lib import META_NAME, N_PARTICLES, PARAMS_NAME
+from .jet_lib import META_NAME, N_PARTICLES, PARAMS_NAME
 
 # network fitting
 

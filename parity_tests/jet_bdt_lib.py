@@ -6,7 +6,7 @@ import os
 import joblib
 import numpy
 import xgboost
-from jet_lib import META_NAME, MODEL_NAME, parity_flip
+from .jet_lib import META_NAME, MODEL_NAME, parity_flip
 
 from sksym import sksym
 

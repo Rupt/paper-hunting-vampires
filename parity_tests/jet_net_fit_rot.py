@@ -16,8 +16,8 @@ import argparse
 import os
 
 import numpy
-from jet_lib import load_rot, load_rot_xs
-from jet_net_lib import fit_dump, net_fit, zeta_20_20_10
+from .jet_lib import load_rot, load_rot_xs
+from .jet_net_lib import fit_dump, net_fit, zeta_20_20_10
 
 
 def main():

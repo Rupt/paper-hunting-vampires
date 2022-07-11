@@ -16,8 +16,8 @@ python parity_tests/jet_net_fit.py \
 import argparse
 import os
 
-from jet_lib import load_invariant_momenta, stitch_parts
-from jet_net_lib import fit_dump, net_fit, zeta_100_100_d_10
+from .jet_lib import load_invariant_momenta, stitch_parts
+from .jet_net_lib import fit_dump, net_fit, zeta_100_100_d_10
 
 
 def main():

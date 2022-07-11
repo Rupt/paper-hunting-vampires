@@ -18,8 +18,8 @@ python parity_tests/jet_bdt_fit.py \
 import argparse
 import os
 
-from jet_bdt_lib import bdt_fit, bdt_meta, fit_dump
-from jet_lib import load_invariant_momenta, stitch_parts
+from .jet_bdt_lib import bdt_fit, bdt_meta, fit_dump
+from .jet_lib import load_invariant_momenta, stitch_parts
 
 
 def main():
