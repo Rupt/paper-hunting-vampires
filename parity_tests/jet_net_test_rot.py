@@ -14,7 +14,8 @@ import argparse
 import os
 
 import numpy
-from .jet_lib import load_rot, result_dump, load_rot_xs
+
+from .jet_lib import load_rot, load_rot_xs, result_dump
 from .jet_net_lib import fit_load, net_test, zeta_20_20_10
 
 
@@ -69,7 +70,6 @@ def jet_net_test(datapath, outpath, ntest, *, private=False, normalize=False):
         },
     )
     result_dump(result, outpath, private=private)
-
 
 
 if __name__ == "__main__":

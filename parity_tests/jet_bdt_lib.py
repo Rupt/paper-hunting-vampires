@@ -6,9 +6,10 @@ import os
 import joblib
 import numpy
 import xgboost
-from .jet_lib import META_NAME, MODEL_NAME, parity_flip
 
 from sksym import sksym
+
+from .jet_lib import META_NAME, MODEL_NAME, parity_flip
 
 
 def bdt_fit(seed, model_kwargs, train_real, val_real, *, nstep=50):

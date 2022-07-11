@@ -11,6 +11,7 @@ import jax
 import joblib
 import numpy
 import optax
+
 from .jet_lib import META_NAME, N_PARTICLES, PARAMS_NAME
 
 # network fitting
@@ -292,7 +293,7 @@ def fit_prescale(real):
     std_p = real[slice_p].std(axis=0, where=mask)
 
     # only y flips under parity - must be zero by symmety
-    mean_p[3: nmomenta: 3] = 0
+    mean_p[3:nmomenta:3] = 0
 
     # other parts
     mean_o = real[:, nmomenta:].mean(axis=0)

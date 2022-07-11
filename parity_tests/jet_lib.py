@@ -211,10 +211,14 @@ def _file_hour(filepath):
 
 def load_rot_xs():
     hour, xs_pre, *_ = numpy.loadtxt(
-        "results/rot_xs.csv", skiprows=1, delimiter=",",
+        "results/rot_xs.csv",
+        skiprows=1,
+        delimiter=",",
     ).T
     _, nsamples, ngenerated = numpy.loadtxt(
-        "results/rot_acceptance_truth.csv", skiprows=1, delimiter=",",
+        "results/rot_acceptance_truth.csv",
+        skiprows=1,
+        delimiter=",",
     ).T
     acc = nsamples / ngenerated
 
