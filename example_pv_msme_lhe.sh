@@ -60,5 +60,5 @@ liv/process/pv_msme_${LAMBDAPV/\./p}/Events/example/unweighted_events.lhe.gz \
 pv_msme_${LAMBDAPV/\./p}.lhe.gz
 
 
-echo pv_msme_${LAMBDAPV/\./p}.lhe.gz
+echo ls -lh pv_msme_${LAMBDAPV/\./p}.lhe.gz
 ls -lh pv_msme_${LAMBDAPV/\./p}.lhe.gz
