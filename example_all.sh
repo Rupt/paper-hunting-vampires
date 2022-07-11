@@ -1,3 +1,5 @@
+# run all core examples (for testing)s
+# usage: source example_all.sh
 source example_plots.sh
 source example_pv_msme_lhe.sh 0.5
 source example_truth_jet.sh pv_msme_0p5.lhe.gz
