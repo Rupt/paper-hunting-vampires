@@ -1,19 +1,18 @@
 """
-Load a BDT model and test it against example data.
+Load an NN model and test it against example data.
 
 Usage example:
 
-
-source example_bdt.sh
+source example_nn.sh
 
 OR
 
-make env_bdt/bin/activate
-source env_bdt/bin/activate
+make env_nn/bin/activate
+source env_nn/bin/activate
 
-python example_bdt.py \
+python example_nn.py \
 --datapath pv_msme_3j_4j_1_seed_80_truth_cut.h5 \
---modelpath results/models/jet_bdt_truth/liv_3j_4j_1/
+--modelpath results/models/jet_net_truth/liv_3j_4j_1/
 
 """
 import argparse
@@ -21,8 +20,8 @@ import json
 import os
 import subprocess
 
-from parity_tests.jet_bdt_lib import bdt_test, fit_load
 from parity_tests.jet_lib import load_invariant_momenta, result_dump, stitch_parts
+from parity_tests.jet_net_lib import fit_load, net_test, zeta_100_100_d_10
 
 DEFAULT_DATAPATH = "pv_msme_3j_4j_1_seed_80_truth_cut.h5"
 
@@ -36,16 +35,17 @@ def main():
     if args.datapath == DEFAULT_DATAPATH:
         subprocess.run(["make", DEFAULT_DATAPATH])
 
-    example_bdt(args.datapath, args.modelpath)
+    example_nn(args.datapath, args.modelpath)
 
 
-def example_bdt(datapath, modelpath):
-    model, meta = fit_load(modelpath)
+def example_nn(datapath, modelpath):
+    params, meta = fit_load(modelpath)
 
     test_real = load_invariant_momenta(datapath)
 
-    result = bdt_test(
-        model,
+    result = net_test(
+        zeta_100_100_d_10,
+        params,
         meta,
         test_real,
         tag={
