@@ -4,7 +4,7 @@ https://arxiv.org/abs/2205.09876
 
 
 # Download datasets
-You do not need to download the complete datasets to use this repository. But you may wish to to, for example, train and test your own models.
+You do not need to download the complete datasets to use this repository. But you may wish to, for example, to train and test your own models.
 
 This repository includes:
 - all data to reproduce all plots in the paper (serialized results, not raw input data),
@@ -32,7 +32,7 @@ We also require gfortran for MadGraph and texlive for plotting.
 ```bash
 conda create -n hunting-vampires -c conda-forge python==3.9.12 gfortran==12.1.0
 ```
-then to set up
+Then to set up
 ```bash
 conda activate hunting-vampires
 ```
@@ -64,7 +64,7 @@ It then:
 The modification is implemented in `liv/use_lab_frame.py`,
 and implements a Lorentz boost in each `liv/process/${PROCESS}/SubProcesses/*/auto_dsig?.f` file.
 
-We also leave lots of mess behind in the liv/ directory; you can use `git diff' to see what's there.
+We also leave lots of mess behind in the liv/ directory; you can use `git diff` to see what's there.
 
 Execute:
 ```bash
@@ -100,13 +100,13 @@ sample that we (could have) generated above.
 ```bash
 source example_bdt.sh
 ```
-This prints out a json-formatted report of its results in which:
+This prints out a json-formatted report of its results, in which:
 * `ntest` is the number of testing data,
 * `log_r_test` is the model-versus-symmetry $\log$-likelihood ratio, which equals $nQ$, and
 * `quality` is $Q$ with its standard mean and standard deviation estiamtes.
 
 Many other models are saved in `results/models/`. \
-Modify the paths given in `example_bdt.sh` as arguments to `example_bdt.py` to test them too!
+Modify the paths given in `example_bdt.sh` as arguments to `example_bdt.py` to test them, too!
 
 
 # Test an NN model
@@ -115,13 +115,13 @@ sample that we (could have) generated above.
 ```bash
 source example_nn.sh
 ```
-Just as for the BDT, this prints out a json-formatted report of its results in which:
+Just as for the BDT, this prints out a json-formatted report of its results, in which:
 * `ntest` is the number of testing data,
 * `log_r_test` is the model-versus-symmetry $\log$-likelihood ratio, which equals $nQ$, and
 * `quality` is $Q$ with its standard mean and standard deviation estimates.
 
 Many other models are saved in `results/models/`. \
-Modify the paths given in `example_nn.sh` as arguments to `example_nn.py` to test them too!
+Modify the paths given in `example_nn.sh` as arguments to `example_nn.py` to test them, too!
 
 We don't attempt to set up a GPU; you can ignore the warning
 `WARNING:absl:No GPU/TPU found, falling back to CPU...`.
