@@ -100,6 +100,22 @@ Modify the paths given in `example_nn.sh` as arguments to `example_nn.py` to tes
 We don't attempt to set up a GPU; you can ignore the warning
 `WARNING:absl:No GPU/TPU found, falling back to CPU...`.
 
+# Rotated PV-mSME extras
+
+We inlude plots of cross-sections and Q split by hour in a notebook.
+
+The split-Q plot uses data shared on Zenodo. \
+To run it yourself, download `truth-jet-rot*` from https://zenodo.org/record/6822267 and unzip them at a common path. \
+In the notebook, update the line `DATAPATH = "..."` in cell 8 to point to these unzipped data.
+
+To launch it:
+```bash
+make env_nn/bin/activate
+source env_nn/bin/activate
+jupyter notebook
+# in the noteobok web interface, open: example_rotated_pv_msme.ipynb
+```
+
 
 # Run Delphes reconstruction
 Follow instructions in `delphes/README.md` for environment setup and execution.

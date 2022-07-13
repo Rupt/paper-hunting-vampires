@@ -175,7 +175,7 @@ def print_llr(meta):
 # rotation business
 def load_rot(path, *, nper=None):
     if nper is None or isinstance(nper, int):
-        nper = [nper] * len(paths)
+        nper = [nper] * 24
 
     parts = []
     for hour, nper_i in zip(range(24), nper):
@@ -211,14 +211,10 @@ def _file_hour(filepath):
 
 def load_rot_xs():
     hour, xs_pre, *_ = numpy.loadtxt(
-        "results/rot_xs.csv",
-        skiprows=1,
-        delimiter=",",
+        "results/rot_xs.csv", skiprows=1, delimiter=",",
     ).T
     _, nsamples, ngenerated = numpy.loadtxt(
-        "results/rot_acceptance_truth.csv",
-        skiprows=1,
-        delimiter=",",
+        "results/rot_acceptance_truth.csv", skiprows=1, delimiter=",",
     ).T
     acc = nsamples / ngenerated
 
