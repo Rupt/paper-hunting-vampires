@@ -1,6 +1,8 @@
 # Supporting data and code for:<br>Hunting for vampires and other unlikely forms of parity violation at the Large Hadron Collider
-arxiv: https://arxiv.org/abs/2205.09876
-zenodo: https://doi.org/10.5281/zenodo.6827724
+
+- JHEP https://doi.org/10.1007/JHEP08%282022%29231
+- arXiv https://arxiv.org/abs/2205.09876
+- Zenodo https://doi.org/10.5281/zenodo.6827724
 
 
 # Download datasets
